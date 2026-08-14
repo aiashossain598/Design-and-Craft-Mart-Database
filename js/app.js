@@ -3245,114 +3245,81 @@ async function loadJoinRequests() {
 
                 return `
 
-                    <div
-                        class="card"
-                        style="margin-bottom:12px;"
-                    >
+    <div class="join-request-card">
 
-                        <div class="card-body">
+        <div class="join-request-info">
 
-
-                            <div
-                                style="
-                                    font-weight:600;
-                                    margin-bottom:6px;
-                                "
-                            >
-                                ${esc(
-                                    profile.full_name ||
-                                    "Unnamed Partner"
-                                )}
-                            </div>
+            <h4 class="join-request-name">
+                ${esc(
+                    profile.full_name ||
+                    "Unnamed Partner"
+                )}
+            </h4>
 
 
-                            <div
-                                style="
-                                    font-size:13px;
-                                    color:var(--text-dim);
-                                    line-height:1.7;
-                                "
-                            >
+            <div class="join-request-detail">
 
-                                ${
-                                    profile.mobile
-                                        ? "📱 " +
-                                          esc(
-                                              profile.mobile
-                                          ) +
-                                          "<br>"
-                                        : ""
-                                }
+                ${
+                    profile.mobile
+                        ? `
+                            <span>
+                                📱 ${esc(profile.mobile)}
+                            </span>
+                          `
+                        : ""
+                }
 
 
-                                ${
-                                    profile.address
-                                        ? "🏠 " +
-                                          esc(
-                                              profile.address
-                                          ) +
-                                          "<br>"
-                                        : ""
-                                }
+                ${
+                    profile.address
+                        ? `
+                            <span>
+                                🏠 ${esc(profile.address)}
+                            </span>
+                          `
+                        : ""
+                }
 
 
-                                ${
-                                    profile.fb_profile
-                                        ? "🔗 " +
-                                          esc(
-                                              profile.fb_profile
-                                          )
-                                        : ""
-                                }
+                ${
+                    profile.fb_profile
+                        ? `
+                            <span>
+                                🔗 ${esc(profile.fb_profile)}
+                            </span>
+                          `
+                        : ""
+                }
 
-                            </div>
+            </div>
 
-
-                            <div
-                                style="
-                                    margin-top:12px;
-                                    display:flex;
-                                    gap:8px;
-                                "
-                            >
-
-                                <button
-                                    type="button"
-                                    class="btn-add"
-                                    data-approve="${esc(
-                                        profile.id
-                                    )}"
-                                    style="
-                                        padding:8px 16px;
-                                    "
-                                >
-                                    Approve
-                                </button>
+        </div>
 
 
-                                <button
-                                    type="button"
-                                    class="btn-add"
-                                    data-reject="${esc(
-                                        profile.id
-                                    )}"
-                                    style="
-                                        padding:8px 16px;
-                                        background:var(--danger);
-                                        color:#fff;
-                                    "
-                                >
-                                    Reject
-                                </button>
+        <div class="join-request-actions">
 
-                            </div>
+            <button
+                type="button"
+                class="approve-btn"
+                data-approve="${esc(profile.id)}"
+            >
+                Approve
+            </button>
 
 
-                        </div>
+            <button
+                type="button"
+                class="reject-btn"
+                data-reject="${esc(profile.id)}"
+            >
+                Reject
+            </button>
 
-                    </div>
+        </div>
 
-                `;
+    </div>
+
+            `;
 
             })
             .join("");
@@ -6880,3 +6847,156 @@ function setupMobileNavigation() {
     }
 
 }
+
+// ============================================================
+// MOBILE MENU
+// ============================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const menuBtn = document.getElementById("mobileMenuBtn");
+    const menu = document.getElementById("mobileMenu");
+    const closeBtn = document.getElementById("mobileMenuClose");
+    const overlay = document.getElementById("mobileMenuOverlay");
+
+    if (!menuBtn || !menu) {
+        console.error("Mobile menu elements not found.");
+        return;
+    }
+
+    function openMobileMenu() {
+        document.body.classList.add("mobile-menu-open");
+
+        menu.setAttribute("aria-hidden", "false");
+
+        if (overlay) {
+            overlay.setAttribute("aria-hidden", "false");
+        }
+
+        menuBtn.setAttribute("aria-expanded", "true");
+    }
+
+    function closeMobileMenu() {
+        document.body.classList.remove("mobile-menu-open");
+
+        menu.setAttribute("aria-hidden", "true");
+
+        if (overlay) {
+            overlay.setAttribute("aria-hidden", "true");
+        }
+
+        menuBtn.setAttribute("aria-expanded", "false");
+    }
+
+    menuBtn.addEventListener("click", openMobileMenu);
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeMobileMenu);
+    }
+
+    if (overlay) {
+        overlay.addEventListener("click", closeMobileMenu);
+    }
+
+
+    // Mobile navigation
+    document.querySelectorAll(".mobile-nav .nav-item").forEach(item => {
+
+        item.addEventListener("click", () => {
+
+            const tabName = item.dataset.tab;
+
+            // Find the existing desktop navigation item
+            const desktopItem = document.querySelector(
+                `.sidebar .nav-item[data-tab="${tabName}"]`
+            );
+
+            if (desktopItem) {
+                desktopItem.click();
+            } else {
+                console.warn(
+                    "Desktop navigation item not found:",
+                    tabName
+                );
+            }
+
+            closeMobileMenu();
+        });
+
+    });
+
+
+    // Mobile logout
+    const mobileLogout =
+        document.getElementById("mobileLogoutBtn");
+
+    if (mobileLogout) {
+
+        mobileLogout.addEventListener("click", () => {
+
+            const desktopLogout =
+                document.getElementById("logoutBtn");
+
+            if (desktopLogout) {
+                desktopLogout.click();
+            }
+
+        });
+
+    }
+
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const menuBtn = document.getElementById("mobileMenuBtn");
+    const menu = document.getElementById("mobileMenu");
+    const closeBtn = document.getElementById("mobileMenuClose");
+    const overlay = document.getElementById("mobileMenuOverlay");
+
+    if (!menuBtn || !menu) {
+        console.error("Mobile menu HTML not found.");
+        return;
+    }
+
+    function openMobileMenu() {
+        document.body.classList.add("mobile-menu-open");
+        menuBtn.setAttribute("aria-expanded", "true");
+    }
+
+    function closeMobileMenu() {
+        document.body.classList.remove("mobile-menu-open");
+        menuBtn.setAttribute("aria-expanded", "false");
+    }
+
+    menuBtn.addEventListener("click", openMobileMenu);
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeMobileMenu);
+    }
+
+    if (overlay) {
+        overlay.addEventListener("click", closeMobileMenu);
+    }
+
+    document.querySelectorAll(".mobile-nav .nav-item").forEach(item => {
+
+        item.addEventListener("click", function () {
+
+            const tab = this.dataset.tab;
+
+            const desktopItem =
+                document.querySelector(
+                    `.sidebar .nav-item[data-tab="${tab}"]`
+                );
+
+            if (desktopItem) {
+                desktopItem.click();
+            }
+
+            closeMobileMenu();
+        });
+
+    });
+
+});
