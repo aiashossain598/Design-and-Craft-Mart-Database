@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Hub — Join Request</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<div class="auth-wrap">
+  <div class="auth-card" style="max-width:440px;">
+    <div class="brand">Team Hub</div>
+    <p class="sub">টিমে যোগ হওয়ার জন্য নিচের ফর্মটা পূরণ করো। Admin রিভিউ করে approve করলে তুমি লগইন করতে পারবে।</p>
+
+    <div class="error-msg" id="msgBox"></div>
+
+    <form id="joinForm">
+      <label>পূর্ণ নাম *</label>
+      <input type="text" id="fullName" required>
+
+      <label>মোবাইল নাম্বার *</label>
+      <input type="tel" id="mobile" required>
+
+      <label>ঠিকানা *</label>
+      <input type="text" id="address" required>
+
+      <label>Facebook Profile লিংক / আইডি নাম</label>
+      <input type="text" id="fbProfile" placeholder="facebook.com/yourname">
+
+      <hr style="border-color:var(--border); margin: 22px 0;">
+
+      <label>Email (লগইনের জন্য) *</label>
+      <input type="email" id="email" required>
+
+      <label>Password (নিজে সেট করো) *</label>
+      <input type="password" id="password" required minlength="6">
+
+      <button type="submit" class="btn-primary" id="submitBtn">রিকোয়েস্ট পাঠাও</button>
+    </form>
+
+    <div class="auth-toggle">
+      আগে থেকে approved account আছে? <a href="index.html">লগইন করো</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/supabase-config.js"></script>
+<script>
+const form = document.getElementById("joinForm");
+const submitBtn = document.getElementById("submitBtn");
+const msgBox = document.getElementById("msgBox");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  msgBox.style.display = "none";
+  submitBtn.disabled = true;
+  submitBtn.textContent = "পাঠানো হচ্ছে...";
+
+  const full_name = document.getElementById("fullName").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const fb_profile = document.getElementById("fbProfile").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabaseClient.auth.signUp({
+    email,
+    password,
+    options: { data: { full_name, mobile, address, fb_profile } },
+  });
+
+  if (error) {
+    msgBox.textContent = error.message;
+    msgBox.style.display = "block";
+    submitBtn.disabled = false;
+    submitBtn.textContent = "রিকোয়েস্ট পাঠাও";
+    return;
+  }
+
+  // যেহেতু approve হওয়ার আগে ঢুকতে দেওয়া যাবে না, সাথে সাথে সাইন আউট করে দিচ্ছি
+  await supabaseClient.auth.signOut();
+
+  form.style.display = "none";
+  msgBox.style.background = "#1f3a33";
+  msgBox.style.color = "#4fd8b8";
+  msgBox.style.borderColor = "#2c5a4d";
+  msgBox.textContent = "রিকোয়েস্ট জমা হয়েছে। Admin approve করলেই তুমি লগইন করতে পারবে।";
+  msgBox.style.display = "block";
+});
+</script>
+</body>
+</html>

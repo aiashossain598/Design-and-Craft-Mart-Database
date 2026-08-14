@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Design and Craft Mart — Partner Hub</title>
+
+    <link rel="icon" href="assets/logo.png" type="image/png">
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         LOGIN PAGE
+    ========================================================== -->
+
+    <div class="login-shell">
+
+
+        <!-- =====================================================
+             BRAND SIDE
+        ====================================================== -->
+
+        <div class="login-brand">
+
+            <div class="brand-content">
+
+
+                <!-- LOGO -->
+
+                <div class="brand-logo">
+
+                    <img
+                        src="assets/logo.png"
+                        alt="Design and Craft Mart"
+                    >
+
+                </div>
+
+
+                <!-- BRAND NAME -->
+
+                <div class="brand-name">
+
+                    DESIGN AND<br>
+                    CRAFT MART
+
+                </div>
+
+
+                <!-- BRAND LINE -->
+
+                <div class="brand-line"></div>
+
+
+                <!-- TAGLINE -->
+
+                <div class="brand-tagline">
+
+                    Crafting Memories,
+                    <span>Creating Smiles</span>
+
+                </div>
+
+
+                <!-- FEATURES -->
+
+                <div class="brand-features">
+
+
+                    <!-- FEATURE 1 -->
+
+                    <div class="brand-feature">
+
+                        <span>✦</span>
+
+                        <div>
+
+                            <strong>
+                                Creative
+                            </strong>
+
+                            <small>
+                                Ideas &amp; Designs
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FEATURE 2 -->
+
+                    <div class="brand-feature">
+
+                        <span>◆</span>
+
+                        <div>
+
+                            <strong>
+                                Premium
+                            </strong>
+
+                            <small>
+                                Quality &amp; Craftsmanship
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FEATURE 3 -->
+
+                    <div class="brand-feature">
+
+                        <span>◌</span>
+
+                        <div>
+
+                            <strong>
+                                Connected
+                            </strong>
+
+                            <small>
+                                Partner Workspace
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             LOGIN AREA
+        ====================================================== -->
+
+        <div class="login-area">
+
+
+            <div class="login-card">
+
+
+                <!-- LOGIN ICON -->
+
+                <div class="login-icon">
+                    <img
+                        src="assets/logo.png"
+                        alt="Design and Craft Mart logo"
+                    >
+                </div>
+
+
+                <!-- TITLE -->
+
+                <h1>
+                    Welcome To Design and Craft Mart Team
+                </h1>
+
+
+                <!-- SUBTITLE -->
+
+                <p class="login-subtitle">
+                    Sign In
+                </p>
+
+
+                <!-- =================================================
+                     LOGIN ERROR / SUCCESS MESSAGE
+                ================================================== -->
+
+                <div
+                    class="error-msg"
+                    id="loginError"
+                    role="alert"
+                    aria-live="polite"
+                ></div>
+
+
+
+                <!-- =================================================
+                     LOGIN FORM
+                ================================================== -->
+
+                <form
+                    id="loginForm"
+                    autocomplete="on"
+                >
+
+
+                    <!-- EMAIL -->
+
+                    <div class="input-group">
+
+                        <label for="loginEmail">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            name="email"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="input-group">
+
+
+                        <div class="password-label">
+
+                            <label for="loginPassword">
+                                Password
+                            </label>
+
+
+                            <a
+                                href="#"
+                                id="forgotPassword"
+                            >
+                                Forgot password?
+                            </a>
+
+                        </div>
+
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- REMEMBER ME -->
+
+                    <label class="remember">
+
+                        <input
+                            type="checkbox"
+                            id="rememberMe"
+                            name="remember"
+                        >
+
+                        <span>
+                            Remember me
+                        </span>
+
+                    </label>
+
+
+
+                    <!-- SIGN IN BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="login-button"
+                        id="loginBtn"
+                    >
+
+                        <span>
+                            Sign In
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                </form>
+
+
+                <p class="signup-prompt">
+                    New to the team?
+                    <a href="join-request.html">
+                        Register a new account
+                    </a>
+                </p>
+
+
+
+                <!-- FOOTER -->
+
+                <div class="login-footer">
+                    Design and Craft Mart
+                </div>
+
+
+            </div>
+
+
+
+            <!-- COPYRIGHT -->
+
+            <div class="copyright">
+
+                © Design and Craft Mart.
+                All rights reserved.
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================================================
+         SUPABASE
+    ========================================================== -->
+
+    <!--
+        IMPORTANT:
+        Supabase library MUST load first.
+    -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!--
+        Supabase configuration MUST load second.
+    -->
+
+    <script src="js/supabase-config.js"></script>
+
+
+    <!--
+        Login JavaScript MUST load after supabase-config.js.
+    -->
+
+    <script src="js/login.js"></script>
+
+
+</body>
+
+</html>

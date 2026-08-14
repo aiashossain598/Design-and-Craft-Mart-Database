@@ -1,0 +1,2083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Design and Craft Mart DCM Team"
+  >
+
+  <title>Partner Hub | Design and Craft Mart</title>
+
+  <link rel="icon" href="assets/logo.png" type="image/png">
+
+  <!-- MAIN CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+  <!-- =========================================================
+       APP SHELL
+  ========================================================== -->
+
+  <div class="app-shell">
+
+
+    <!-- =======================================================
+         SIDEBAR
+    ======================================================== -->
+
+    <aside class="sidebar">
+
+
+      <!-- SIDEBAR BRAND -->
+
+      <div class="sidebar-brand">
+
+        <img
+          src="assets/logo.png"
+          alt="Design and Craft Mart"
+          class="sidebar-logo"
+        >
+
+        <div class="sidebar-brand-name">
+          DESIGN AND<br>
+          CRAFT MART
+        </div>
+
+        <div class="sidebar-brand-line"></div>
+
+        <span>
+          DCM TEAM
+        </span>
+
+      </div>
+
+
+      <!-- SIDEBAR NAV -->
+
+      <nav class="sidebar-nav">
+
+
+        <div
+          class="nav-item active"
+          data-tab="dashboard"
+        >
+
+          <span class="nav-icon">⌂</span>
+
+          <span>
+            Dashboard
+          </span>
+
+        </div>
+
+
+        <div
+          class="nav-item"
+          data-tab="content"
+        >
+
+          <span class="nav-icon">✦</span>
+
+          <span>
+            Content Ideas
+          </span>
+
+        </div>
+
+
+        <div
+          class="nav-item"
+          data-tab="orders"
+        >
+
+          <span class="nav-icon">▣</span>
+
+          <span>
+            Orders
+          </span>
+
+        </div>
+
+
+        <div
+          class="nav-item"
+          data-tab="team-chat"
+        >
+
+          <span class="nav-icon">◌</span>
+
+          <span>
+            Team Chat
+          </span>
+
+        </div>
+
+
+        <div
+          class="nav-item"
+          data-tab="profile"
+        >
+
+          <span class="nav-icon">○</span>
+
+          <span>
+            My Profile
+          </span>
+
+        </div>
+
+
+        <div
+          class="nav-item admin-nav"
+          data-tab="admin"
+          id="adminNavItem"
+          style="display:none;"
+        >
+
+          <span class="nav-icon">◆</span>
+
+          <span>
+            Admin Panel
+          </span>
+
+        </div>
+
+
+      </nav>
+
+
+      <!-- SIDEBAR FOOTER -->
+
+      <div class="sidebar-footer">
+
+
+        <div class="sidebar-user">
+
+          <div
+            class="user-avatar"
+            id="userAvatar"
+          >
+            A
+          </div>
+
+
+          <div class="user-info">
+
+            <strong id="whoAmI">
+              Loading...
+            </strong>
+
+            <span id="userRole">
+              Partner
+            </span>
+
+          </div>
+
+        <div class="notification-wrapper">
+
+
+    <div
+        class="notification-panel"
+        id="notificationPanel"
+        hidden
+    >
+
+        <div class="notification-panel-header">
+
+            <div>
+                <span class="notification-eyebrow">
+                    WORKSPACE
+                </span>
+
+                <h3>
+                    Notifications
+                </h3>
+            </div>
+
+            <button
+                type="button"
+                id="markAllNotificationsRead"
+                class="notification-mark-read"
+            >
+                Mark all read
+            </button>
+
+        </div>
+
+
+        <div
+            class="notification-list"
+            id="notificationList"
+        >
+            <div class="notification-empty">
+
+                <div class="notification-empty-icon">
+                    ◇
+                </div>
+
+                <strong>
+                    You're all caught up
+                </strong>
+
+                <span>
+                    New workspace notifications will appear here.
+                </span>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+    </aside>
+
+
+
+    <!-- =======================================================
+         MAIN
+    ======================================================== -->
+
+    <main class="main">
+
+
+      <!-- =====================================================
+           TOP BAR
+      ====================================================== -->
+
+      <header class="topbar">
+
+
+        <div class="mobile-brand">
+          DCM
+        </div>
+
+
+        <div class="topbar-right">
+
+
+          <div class="topbar-actions">
+
+    <!-- Notification Bell -->
+    <button
+        id="notificationBtn"
+        class="notification-btn"
+        aria-label="Notifications"
+        aria-expanded="false"
+    >
+        🔔
+        <span id="notificationBadge" class="notification-badge"></span>
+    </button>
+
+    <!-- Profile -->
+    <button class="profile-btn" aria-label="Account menu">▾</button>
+
+</div>
+
+
+          <div class="topbar-profile">
+
+            <div
+              class="user-avatar small"
+              id="topAvatar"
+            >
+              A
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+      </header>
+
+
+
+      <!-- =====================================================
+           DASHBOARD
+      ====================================================== -->
+
+      <section
+        id="tab-dashboard"
+        class="dashboard-tab"
+      >
+
+
+        <div class="page-heading">
+
+          <div>
+
+            <h1>
+              Welcome back,
+              <span id="dashboardName">
+                ...
+              </span>
+            </h1>
+
+            <p>
+              Here's what's happening with your workspace today.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- STATS -->
+
+        <div class="stats-grid">
+
+
+          <div class="stat-card">
+
+            <div class="stat-icon">
+              ✦
+            </div>
+
+            <div>
+
+              <span>
+                Content Ideas
+              </span>
+
+              <strong id="statIdeas">
+                —
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-icon">
+              ▣
+            </div>
+
+            <div>
+
+              <span>
+                Total Orders
+              </span>
+
+              <strong id="statOrders">
+                —
+              </strong>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- DASHBOARD CONTENT -->
+
+        <div class="dashboard-columns">
+
+
+          <!-- RECENT IDEAS -->
+
+          <div class="dashboard-panel">
+
+            <div class="panel-heading">
+
+              <div>
+
+                <span class="eyebrow">
+                  CONTENT
+                </span>
+
+                <h3>
+                  Recent Ideas
+                </h3>
+
+              </div>
+
+
+              <button
+                type="button"
+                class="text-button"
+                data-go-tab="content"
+              >
+                View All →
+              </button>
+
+            </div>
+
+
+            <div id="dashboardIdeas">
+
+              <div class="dashboard-empty">
+                Loading...
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- RECENT ORDERS -->
+
+          <div class="dashboard-panel">
+
+            <div class="panel-heading">
+
+              <div>
+
+                <span class="eyebrow">
+                  ORDERS
+                </span>
+
+                <h3>
+                  Recent Orders
+                </h3>
+
+              </div>
+
+
+              <button
+                type="button"
+                class="text-button"
+                data-go-tab="orders"
+              >
+                View All →
+              </button>
+
+            </div>
+
+
+            <div id="dashboardOrders">
+
+              <div class="dashboard-empty">
+                Loading...
+              </div>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+      </section>
+
+
+
+      <!-- =====================================================
+           CONTENT IDEAS
+      ====================================================== -->
+
+      <section
+        id="tab-content"
+        style="display:none;"
+      >
+
+
+        <div class="page-heading">
+
+          <div>
+
+            <span class="eyebrow">
+              CONTENT LIBRARY
+            </span>
+
+            <h1>
+              Content Ideas
+            </h1>
+
+            <p>
+              Upload and manage creative ideas for Design and Craft Mart.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- CONTENT TOOLBAR -->
+
+        <div class="content-toolbar">
+
+
+          <div class="content-search">
+
+            <span>
+              ⌕
+            </span>
+
+            <input
+              type="text"
+              id="contentSearch"
+              placeholder="Search content ideas..."
+            >
+
+          </div>
+
+
+          <button
+            type="button"
+            class="btn-add"
+            id="openIdeaModal"
+          >
+            + Add New Idea
+          </button>
+
+
+        </div>
+
+
+
+        <!-- CONTENT FILTERS -->
+
+        <div class="content-filters">
+
+
+          <button
+            type="button"
+            class="filter-btn active"
+            data-filter="all"
+          >
+            All
+          </button>
+
+
+          <button
+            type="button"
+            class="filter-btn"
+            data-filter="mine"
+          >
+            My Ideas
+          </button>
+
+
+          <button
+            type="button"
+            class="filter-btn"
+            data-filter="pending_approval"
+          >
+            Pending
+          </button>
+
+
+          <button
+            type="button"
+            class="filter-btn"
+            data-filter="posted"
+          >
+            Posted
+          </button>
+
+
+        </div>
+
+
+
+        <!-- CONTENT GRID -->
+
+        <div
+          class="card-grid"
+          id="contentGrid"
+        >
+
+          <div class="empty-state">
+            Loading...
+          </div>
+
+        </div>
+
+
+      </section>
+
+
+
+      <!-- =====================================================
+           ORDERS
+      ====================================================== -->
+
+      <section
+        id="tab-orders"
+        style="display:none;"
+      >
+
+
+        <div class="page-heading">
+
+          <div>
+
+            <span class="eyebrow">
+              CLIENT MANAGEMENT
+            </span>
+
+            <h1>
+              Orders
+            </h1>
+
+            <p>
+              Track your customer orders and delivery progress.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ORDER PAGE HEADER -->
+
+        <div class="panel order-page-header">
+
+
+          <div>
+
+            <span class="eyebrow">
+              ORDER MANAGEMENT
+            </span>
+
+            <h3>
+              Customer Orders
+            </h3>
+
+            <p>
+              Create, track and manage client orders from one place.
+            </p>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="btn-add"
+            id="openOrderModal"
+          >
+            + Add New Order
+          </button>
+
+
+        </div>
+
+
+
+        <!-- ORDERS TABLE -->
+
+        <div
+          class="panel"
+          style="padding:0; overflow-x:auto;"
+        >
+
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Customer
+                </th>
+
+                <th>
+                  Details
+                </th>
+
+                <th>
+                  Price
+                </th>
+
+                <th>
+                  Delivery
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="ordersBody">
+
+              <tr>
+
+                <td
+                  colspan="5"
+                  class="empty-state"
+                >
+                  Loading...
+                </td>
+
+              </tr>
+
+            </tbody>
+
+
+          </table>
+
+
+        </div>
+
+
+      </section>
+
+
+
+<!-- =====================================================
+     TEAM CHAT
+===================================================== -->
+
+<section
+  id="tab-team-chat"
+  style="display:none;"
+>
+
+  <!-- PAGE HEADER -->
+  <div class="page-heading">
+
+    <div>
+
+      <span class="eyebrow">
+        TEAM COMMUNICATION
+      </span>
+
+      <h1>
+        Team Chat
+      </h1>
+
+      <p>
+        Discuss ideas, orders and projects with your partners.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- CHAT APPLICATION -->
+  <div class="team-chat-shell">
+
+
+    <!-- CHAT HEADER -->
+    <div class="team-chat-header">
+
+      <div class="team-chat-title-wrap">
+
+        <div class="team-chat-icon">
+          ◌
+        </div>
+
+        <div>
+
+          <h2>
+            Partner Workspace
+          </h2>
+
+          <span class="team-chat-status">
+            <i></i>
+            Team members
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="team-chat-header-right">
+
+        <span
+          class="team-online-count"
+          id="onlineCount"
+        >
+          Team Chat
+        </span>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- CHAT BODY -->
+    <div
+      class="team-chat-messages"
+      id="teamChatMessages"
+    >
+
+      <!-- Loading -->
+      <div
+        class="chat-loading"
+        id="chatLoading"
+      >
+
+        <div class="chat-loading-icon">
+          ◌
+        </div>
+
+        <span>
+          Loading messages...
+        </span>
+
+      </div>
+
+
+      <!-- Empty state -->
+      <div
+        class="chat-empty"
+        id="chatEmpty"
+        style="display:none;"
+      >
+
+        <div class="chat-empty-icon">
+          ✦
+        </div>
+
+        <h3>
+          Start the conversation
+        </h3>
+
+        <p>
+          Be the first to send a message to your team.
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- CHAT COMPOSER -->
+    <div class="team-chat-composer">
+
+      <form
+        id="teamChatForm"
+        autocomplete="off"
+      >
+
+        <div class="chat-input-wrap">
+
+          <textarea
+            id="teamChatInput"
+            rows="1"
+            maxlength="2000"
+            placeholder="Write a message..."
+            aria-label="Write a message"
+          ></textarea>
+
+
+          <div class="chat-input-bottom">
+
+            <span
+              class="chat-character-count"
+              id="chatCharacterCount"
+            >
+              0 / 2000
+            </span>
+
+            <span class="chat-hint">
+              Press Enter to send
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="chat-send-button"
+          id="teamChatSendBtn"
+          aria-label="Send message"
+        >
+
+          <span>
+            Send
+          </span>
+
+          <span class="chat-send-arrow">
+            →
+          </span>
+
+        </button>
+
+      </form>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+
+    <!-- =====================================================
+     PROFILE
+====================================================== -->
+
+<section
+  id="tab-profile"
+  style="display:none;"
+>
+
+  <div class="page-heading">
+
+    <div>
+      <span class="eyebrow">
+        ACCOUNT
+      </span>
+
+      <h1>
+        My Profile
+      </h1>
+
+      <p>
+        Your professional information and business identity.
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- =================================================
+       PROFILE OVERVIEW
+  ================================================== -->
+
+  <div class="profile-layout">
+
+
+    <!-- ===============================================
+         PERSONAL PROFILE
+    ================================================ -->
+
+    <div class="profile-card profile-main-card">
+
+      <div class="profile-avatar-wrap">
+
+        <div
+          class="profile-avatar"
+          id="profileAvatar"
+        >
+          A
+        </div>
+
+        <button
+          type="button"
+          class="profile-avatar-edit"
+          id="profileAvatarEditBtn"
+          aria-label="Change profile photo"
+          title="Change profile photo"
+        >
+          Change Photo
+        </button>
+
+      </div>
+
+
+      <div class="profile-details">
+
+        <span class="eyebrow">
+          PROFESSIONAL PROFILE
+        </span>
+
+        <h2 id="profileName">
+          ...
+        </h2>
+
+        <p
+          class="profile-position"
+          id="profilePosition"
+        >
+          ...
+        </p>
+
+
+        <div class="profile-info">
+
+
+          <!-- EMAIL -->
+
+          <div class="profile-info-item">
+
+            <span>
+              Email
+            </span>
+
+            <strong id="profileEmail">
+              ...
+            </strong>
+
+          </div>
+
+
+          <!-- PHONE -->
+
+          <div class="profile-info-item">
+
+            <span>
+              Phone
+            </span>
+
+            <strong id="profilePhone">
+              ...
+            </strong>
+
+          </div>
+
+
+          <!-- ADDRESS -->
+
+          <div class="profile-info-item">
+
+            <span>
+              Address
+            </span>
+
+            <strong id="profileAddress">
+              ...
+            </strong>
+
+          </div>
+
+
+          <!-- FACEBOOK -->
+
+          <div class="profile-info-item">
+
+            <span>
+              Facebook
+            </span>
+
+            <strong>
+
+              <a
+                href="#"
+                id="profileFacebook"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Profile
+              </a>
+
+            </strong>
+
+          </div>
+
+
+        </div>
+
+
+        <!-- EDIT BUTTON -->
+
+        <div class="profile-actions">
+
+          <button
+            type="button"
+            class="btn-add"
+            id="editProfileBtn"
+          >
+            Edit Profile
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+ <!-- =========================
+     BUSINESS CARD
+========================= -->
+<div class="profile-business-card-section">
+
+    <div class="business-card-header">
+        <div>
+            <span class="section-label">BUSINESS CARD</span>
+            <h2>Digital Business Card</h2>
+        </div>
+
+        <button type="button" class="card-flip-button" id="flipCardBtn">
+            <span>↻</span>
+            Flip Card
+        </button>
+    </div>
+
+    <div class="business-card-scene">
+        <div class="business-card" id="businessCard">
+
+            <div class="business-card-face business-card-front">
+                <img
+                    src="assets/logo.png"
+                    class="business-card-front-logo"
+                    alt="Design and Craft Mart"
+                >
+                <div class="card-gold-pattern"></div>
+                <div class="card-gold-diagonal"></div>
+            </div>
+
+            <div class="business-card-face business-card-back">
+                <div class="business-card-back-inner">
+                    <div class="card-back-left">
+                        <div class="card-user-name" id="cardPersonName">Your Name</div>
+                        <div class="card-user-title" id="cardPersonRole">Your Role</div>
+                        <div class="card-small-line"></div>
+
+                        <div class="card-contact-list">
+                            <div class="card-contact" id="cardPhoneRow">
+                                <div class="contact-icon">☎</div>
+                                <span id="cardPhone">Phone not added</span>
+                            </div>
+
+                            <div class="card-contact" id="cardEmailRow">
+                                <div class="contact-icon">✉</div>
+                                <span id="cardEmail">Email not added</span>
+                            </div>
+
+                            <div class="card-contact" id="cardWebsiteRow">
+                                <div class="contact-icon">◎</div>
+                                <span id="cardWebsite">Website not added</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-back-divider">
+                        <span></span>
+                        <b>◇</b>
+                        <span></span>
+                    </div>
+
+                    <div class="card-back-right">
+                        <img
+                            src="assets/logo.png"
+                            class="card-back-logo"
+                            alt="DCM"
+                        >
+
+                        <div class="card-back-company">
+                            <span>DESIGN AND CRAFT</span>
+                            <span>MART</span>
+                        </div>
+
+                        <div class="card-divider card-divider-small">
+                            <span></span>
+                            <b>✦</b>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-gold-pattern"></div>
+                <div class="card-gold-diagonal"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="business-card-actions">
+        <button
+            type="button"
+            class="card-action-primary"
+            id="downloadBusinessCard"
+        >
+            Download Card
+        </button>
+    </div>
+
+</div>
+
+
+  <!-- =================================================
+       EDIT PROFILE MODAL
+  ================================================== -->
+
+  <div
+    id="profileEditModal"
+    class="modal-overlay"
+    style="display:none;"
+  >
+
+    <div class="modal-card profile-edit-modal">
+
+
+      <div class="modal-header">
+
+        <div>
+
+          <span class="modal-eyebrow">
+            PROFILE SETTINGS
+          </span>
+
+          <h2>
+            Edit Profile
+          </h2>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="modal-close"
+          id="closeProfileEditModal"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form
+        id="profileEditForm"
+        class="profile-edit-form"
+      >
+
+
+        <!-- FULL NAME -->
+
+        <div class="form-group">
+
+          <label for="editProfileName">
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            id="editProfileName"
+            autocomplete="name"
+            required
+          >
+
+        </div>
+
+
+        <!-- POSITION -->
+
+        <div class="form-group">
+
+          <label for="editProfilePosition">
+            Professional Position
+          </label>
+
+          <input
+            type="text"
+            id="editProfilePosition"
+            placeholder="e.g. Founder & Creative Director"
+          >
+
+        </div>
+
+
+        <!-- EMAIL (read-only) -->
+
+        <div class="form-group">
+
+          <label for="editProfileEmail">
+            Email
+          </label>
+
+          <input
+            type="email"
+            id="editProfileEmail"
+            readonly
+          >
+
+        </div>
+
+
+        <!-- ROLE (read-only) -->
+
+        <div class="form-group">
+
+          <label for="editProfileRole">
+            System Role
+          </label>
+
+          <input
+            type="text"
+            id="editProfileRole"
+            readonly
+          >
+
+        </div>
+
+
+        <!-- PHONE -->
+
+        <div class="form-group">
+
+          <label for="editProfilePhone">
+            Mobile Number
+          </label>
+
+          <input
+            type="tel"
+            id="editProfilePhone"
+            autocomplete="tel"
+          >
+
+        </div>
+
+
+        <!-- ADDRESS -->
+
+        <div class="form-group">
+
+          <label for="editProfileAddress">
+            Address
+          </label>
+
+          <textarea
+            id="editProfileAddress"
+            rows="3"
+          ></textarea>
+
+        </div>
+
+
+        <!-- FACEBOOK -->
+
+        <div class="form-group">
+
+          <label for="editProfileFacebook">
+            Facebook Profile
+          </label>
+
+          <input
+            type="url"
+            id="editProfileFacebook"
+            placeholder="https://facebook.com/..."
+          >
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="btn-secondary"
+            id="cancelProfileEdit"
+          >
+            Cancel
+          </button>
+
+
+          <button
+            type="submit"
+            class="btn-add"
+            id="saveProfileBtn"
+          >
+            Save Changes
+          </button>
+
+        </div>
+
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+      <!-- =====================================================
+           ADMIN
+      ====================================================== -->
+
+      <section
+        id="tab-admin"
+        style="display:none;"
+      >
+
+
+        <div class="page-heading">
+
+          <div>
+
+            <span class="eyebrow">
+              ADMINISTRATION
+            </span>
+
+            <h1>
+              Admin Panel
+            </h1>
+
+            <p>
+              Manage partner access and content approvals.
+            </p>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- JOIN REQUESTS -->
+
+        <div class="panel">
+
+          <h3>
+            Pending Partner Requests
+          </h3>
+
+
+          <div id="joinRequestsList">
+
+            <div class="empty-state">
+              Loading...
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- CONTENT APPROVAL -->
+
+        <div class="panel">
+
+          <h3>
+            Pending Content Approval
+          </h3>
+
+
+          <div
+            class="card-grid"
+            id="pendingContentGrid"
+          >
+
+            <div class="empty-state">
+              Loading...
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </section>
+
+
+    </main>
+
+
+  </div>
+
+
+
+  <!-- =========================================================
+       IDEA MODAL
+  ========================================================== -->
+
+  <div
+    class="modal-overlay"
+    id="ideaModal"
+    style="display:none;"
+  >
+
+    <div class="idea-modal">
+
+
+      <!-- MODAL HEADER -->
+
+      <div class="modal-header">
+
+        <div>
+
+          <span class="modal-eyebrow">
+            CONTENT DATABASE
+          </span>
+
+          <h2>
+            Add New Idea
+          </h2>
+
+          <p>
+            Share a new creative idea with the team.
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="modal-close"
+          id="closeIdeaModal"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+
+      <!-- IDEA FORM -->
+
+      <form id="contentForm">
+
+
+        <label for="titleInput">
+          Idea Title
+        </label>
+
+        <input
+          type="text"
+          id="titleInput"
+          placeholder="e.g. Luxury Eid Campaign"
+          required
+        >
+
+
+        <label for="categoryInput">
+          Category
+        </label>
+
+        <select
+          id="categoryInput"
+          required
+        >
+
+          <option value="">
+            Select category
+          </option>
+
+          <option value="Logo">
+            Logo
+          </option>
+
+          <option value="Business Card">
+            Business Card
+          </option>
+
+          <option value="Poster">
+            Poster
+          </option>
+
+          <option value="Social Media">
+            Social Media
+          </option>
+
+          <option value="Banner">
+            Banner
+          </option>
+
+          <option value="Invitation">
+            Invitation
+          </option>
+
+          <option value="Product Design">
+            Product Design
+          </option>
+
+          <option value="Branding">
+            Branding
+          </option>
+
+          <option value="Other">
+            Other
+          </option>
+
+        </select>
+
+
+        <label for="fileInput">
+          Reference Image / Design
+        </label>
+
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/*"
+          required
+        >
+
+
+        <label for="captionInput">
+          Idea Description
+        </label>
+
+        <textarea
+          id="captionInput"
+          placeholder="Describe your idea..."
+          required
+        ></textarea>
+
+
+        <div class="modal-actions">
+
+
+          <button
+            type="button"
+            class="btn-cancel"
+            id="cancelIdea"
+          >
+            Cancel
+          </button>
+
+
+          <button
+            type="submit"
+            class="btn-add"
+            id="contentSubmitBtn"
+          >
+            Submit Idea
+          </button>
+
+
+        </div>
+
+
+      </form>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================================
+       ORDER MODAL
+  ========================================================== -->
+
+  <div
+    class="modal-overlay"
+    id="orderModal"
+    style="display:none;"
+  >
+
+    <div class="order-modal">
+
+
+      <!-- ORDER MODAL HEADER -->
+
+      <div class="modal-header order-modal-header">
+
+
+        <div>
+
+          <span class="modal-eyebrow">
+            CLIENT MANAGEMENT
+          </span>
+
+          <h2>
+            Add New Order
+          </h2>
+
+          <p>
+            Create a new customer order and track its progress.
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="modal-close"
+          id="closeOrderModal"
+        >
+          ×
+        </button>
+
+
+      </div>
+
+
+
+      <!-- ORDER FORM -->
+
+      <form id="orderForm">
+
+
+        <!-- CUSTOMER -->
+
+        <div class="grid-2">
+
+
+          <div>
+
+            <label for="customerSelect">
+              Existing Customer
+            </label>
+
+            <select id="customerSelect">
+
+              <option value="">
+                -- New Customer --
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div>
+
+            <label for="newCustomerName">
+              New Customer Name
+            </label>
+
+            <input
+              type="text"
+              id="newCustomerName"
+              placeholder="Customer name"
+            >
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- CONTACT + PRICE -->
+
+        <div class="grid-2">
+
+
+          <div>
+
+            <label for="newCustomerContact">
+              Contact
+            </label>
+
+            <input
+              type="text"
+              id="newCustomerContact"
+              placeholder="Phone / Email"
+            >
+
+          </div>
+
+
+          <div>
+
+            <label for="price">
+              Price
+            </label>
+
+            <input
+              type="text"
+              id="price"
+              placeholder="৳ 5,000"
+            >
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- ORDER DETAILS -->
+
+        <label for="orderDetails">
+          Order Details
+        </label>
+
+        <textarea
+          id="orderDetails"
+          placeholder="Describe the order..."
+          required
+        ></textarea>
+
+
+
+        <!-- DELIVERY + STATUS -->
+
+        <div class="grid-2">
+
+
+          <div>
+
+            <label for="deliveryTime">
+              Delivery Time
+            </label>
+
+            <input
+              type="datetime-local"
+              id="deliveryTime"
+            >
+
+          </div>
+
+
+          <div>
+
+            <label for="orderStatus">
+              Status
+            </label>
+
+            <select id="orderStatus">
+
+              <option value="new">
+                New
+              </option>
+
+              <option value="confirmed">
+                Confirmed
+              </option>
+
+              <option value="in_progress">
+                In Progress
+              </option>
+
+              <option value="ready">
+                Ready
+              </option>
+
+              <option value="delivered">
+                Delivered
+              </option>
+
+              <option value="cancelled">
+                Cancelled
+              </option>
+
+            </select>
+
+          </div>
+
+
+        </div>
+
+
+
+        <!-- ORDER ACTIONS -->
+
+        <div class="modal-actions">
+
+
+          <button
+            type="button"
+            class="btn-cancel"
+            id="cancelOrder"
+          >
+            Cancel
+          </button>
+
+
+          <button
+            type="submit"
+            class="btn-add"
+            id="orderSubmitBtn"
+          >
+            Add Order
+          </button>
+
+
+        </div>
+
+
+      </form>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================================
+       CONTENT DETAILS MODAL
+  ========================================================== -->
+
+  <div
+    class="modal-overlay"
+    id="contentDetailsModal"
+    style="display:none;"
+  >
+
+    <div class="details-modal">
+
+
+      <div class="modal-header">
+
+
+        <div>
+
+          <span class="modal-eyebrow">
+            CONTENT DETAILS
+          </span>
+
+          <h2>
+            Idea Details
+          </h2>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="modal-close"
+          id="closeDetailsModal"
+        >
+          ×
+        </button>
+
+
+      </div>
+
+
+
+      <div class="details-layout">
+
+
+        <div class="details-image-wrap">
+
+          <img
+            src=""
+            alt="Content idea"
+            id="detailsImage"
+          >
+
+        </div>
+
+
+        <div class="details-info">
+
+
+          <span
+            class="details-status"
+            id="detailsStatus"
+          >
+            —
+          </span>
+
+
+          <h2 id="detailsTitle">
+            —
+          </h2>
+
+
+          <div class="details-section">
+
+            <span>
+              Category
+            </span>
+
+            <p id="detailsCategory">
+              —
+            </p>
+
+          </div>
+
+
+          <div class="details-section">
+
+            <span>
+              Description
+            </span>
+
+            <p id="detailsCaption">
+              —
+            </p>
+
+          </div>
+
+
+          <div class="details-section">
+
+            <span>
+              Created By
+            </span>
+
+            <p id="detailsAuthor">
+              —
+            </p>
+
+          </div>
+
+
+          <div class="details-section">
+
+            <span>
+              Created At
+            </span>
+
+            <p id="detailsDate">
+              —
+            </p>
+
+          </div>
+
+
+          <div class="details-actions">
+
+            <button
+              type="button"
+              class="btn-reject"
+              id="detailsRejectBtn"
+              style="display:none;"
+            >
+              Reject
+            </button>
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================================
+       SUPABASE
+       IMPORTANT:
+       Supabase library MUST load before supabase-config.js
+  ========================================================== -->
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+
+  <!-- SUPABASE CONFIG -->
+
+  <script src="js/supabase-config.js"></script>
+
+  <!-- html2canvas (used for Download Card) -->
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+  <!-- APP JAVASCRIPT -->
+  
+  <script src="js/app.js"></script>
+
+
+</body>
+</html>
