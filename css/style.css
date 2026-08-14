@@ -8099,3 +8099,549 @@ tr:last-child td {
         gap: 10px;
     }
 }
+
+/* =========================================================
+   FINAL PROFILE BUSINESS CARD FIX
+   DO NOT CHANGE OTHER PROFILE COMPONENTS
+========================================================= */
+
+/* ---------- PROFILE TWO COLUMN POSITION ---------- */
+
+#tab-profile .profile-layout {
+    grid-template-columns: minmax(0, 1fr) 540px;
+    gap: 32px;
+    align-items: start;
+}
+
+
+/* ---------- CARD HEADER ---------- */
+
+#tab-profile .profile-business-card-section {
+    width: 100%;
+    min-width: 0;
+}
+
+#tab-profile .business-card-header {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+#tab-profile .business-card-header h2 {
+    margin: 5px 0 0;
+    font-size: 30px;
+}
+
+
+/* ---------- CARD SCENE ---------- */
+
+#tab-profile .business-card-scene {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1800px;
+}
+
+
+/* ---------- CARD SIZE ---------- */
+
+#tab-profile .business-card {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+
+    aspect-ratio: 1.586 / 1;
+
+    margin: 0 auto;
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform 0.9s cubic-bezier(.22,.61,.36,1);
+
+    cursor: pointer;
+}
+
+
+/* ---------- CARD FACE ---------- */
+
+#tab-profile .business-card-face {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+
+/* =========================================================
+   FRONT
+========================================================= */
+
+#tab-profile .business-card-front {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+
+/* ONLY LOGO ON FRONT */
+
+#tab-profile .business-card-front-logo {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 145px;
+    height: 145px;
+
+    max-width: 38%;
+    max-height: 55%;
+
+    object-fit: contain;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 10;
+
+    margin: 0;
+}
+
+
+/* keep decorative elements behind logo */
+
+#tab-profile .business-card-front .card-gold-pattern,
+#tab-profile .business-card-front .card-gold-diagonal {
+    z-index: 2;
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+#tab-profile .business-card-back {
+    transform: rotateY(180deg);
+
+    display: flex;
+
+    align-items: stretch;
+
+    overflow: hidden;
+}
+
+
+/* MAIN BACK GRID */
+
+#tab-profile .business-card-back-inner {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.45fr)
+        1px
+        minmax(0, .9fr);
+
+    gap: 0;
+
+    padding: 28px 30px;
+
+    min-width: 0;
+
+    overflow: hidden;
+}
+
+
+/* ---------- LEFT SIDE ---------- */
+
+#tab-profile .card-back-left {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding-right: 28px;
+
+    overflow: hidden;
+}
+
+
+/* USER NAME */
+
+#tab-profile .card-user-name {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    color: #e5b84d;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(22px, 3vw, 34px);
+
+    line-height: 1.05;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+
+    text-shadow:
+        0 2px 5px rgba(0,0,0,.8);
+}
+
+
+/* USER POSITION */
+
+#tab-profile .card-user-title {
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 8px;
+
+    color: #e0b24a;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(15px, 1.8vw, 21px);
+
+    line-height: 1.2;
+
+    white-space: normal;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* GOLD SMALL LINE */
+
+#tab-profile .card-small-line {
+    width: 90px;
+    height: 2px;
+
+    margin: 13px 0 18px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #dca93f,
+            transparent
+        );
+}
+
+
+/* CONTACT LIST */
+
+#tab-profile .card-contact-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 11px;
+
+    width: 100%;
+
+    min-width: 0;
+}
+
+
+/* CONTACT ROW */
+
+#tab-profile .card-contact {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    width: 100%;
+
+    min-width: 0;
+
+    color: #f0ece5;
+
+    font-size: 14px;
+
+    line-height: 1.25;
+}
+
+
+/* CONTACT TEXT */
+
+#tab-profile .card-contact > span {
+    min-width: 0;
+
+    flex: 1;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* CONTACT ICON */
+
+#tab-profile .contact-icon {
+    flex: 0 0 30px;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(229,184,77,.75);
+
+    border-radius: 50%;
+
+    color: #e5b84d;
+
+    font-size: 13px;
+}
+
+
+/* HIDDEN EMPTY CONTACT */
+
+#tab-profile .card-contact.is-hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   CENTER DIVIDER
+========================================================= */
+
+#tab-profile .card-back-divider {
+    width: 1px;
+
+    height: 72%;
+
+    align-self: center;
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent,
+            rgba(229,184,77,.9),
+            transparent
+        );
+}
+
+
+/* =========================================================
+   RIGHT SIDE
+========================================================= */
+
+#tab-profile .card-back-right {
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding-left: 25px;
+
+    overflow: hidden;
+}
+
+
+/* LOGO */
+
+#tab-profile .card-back-logo {
+    width: 110px;
+    height: 110px;
+
+    max-width: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+    margin: 0 auto 12px;
+}
+
+
+/* COMPANY NAME */
+
+#tab-profile .card-back-company {
+    width: 100%;
+
+    color: #e2b34b;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    line-height: 1.05;
+
+    letter-spacing: .04em;
+
+    text-align: center;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* COMPANY NAME LINES */
+
+#tab-profile .card-back-company span {
+    display: block;
+}
+
+
+/* SMALL DIVIDER */
+
+#tab-profile .card-divider-small {
+    width: 75%;
+    height: 1px;
+
+    margin: 13px auto;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #dca93f,
+            transparent
+        );
+}
+
+
+/* TAGLINE */
+
+#tab-profile .card-back-tagline {
+    max-width: 180px;
+
+    color: #d8c28e;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 12px;
+
+    line-height: 1.35;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   FLIP BUTTON
+========================================================= */
+
+#tab-profile .business-card-actions {
+    width: 100%;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: 18px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    #tab-profile .profile-layout {
+        grid-template-columns:
+            minmax(0, 1fr)
+            minmax(450px, 520px);
+
+        gap: 24px;
+    }
+
+    #tab-profile .business-card {
+        max-width: 520px;
+    }
+}
+
+
+@media (max-width: 950px) {
+
+    #tab-profile .profile-layout {
+        grid-template-columns: 1fr;
+    }
+
+    #tab-profile .business-card {
+        max-width: 560px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    #tab-profile .business-card-back-inner {
+        padding: 20px 18px;
+    }
+
+    #tab-profile .card-back-left {
+        padding-right: 15px;
+    }
+
+    #tab-profile .card-back-right {
+        padding-left: 15px;
+    }
+
+    #tab-profile .card-back-logo {
+        width: 80px;
+        height: 80px;
+    }
+
+    #tab-profile .card-back-company {
+        font-size: 14px;
+    }
+
+    #tab-profile .card-contact {
+        font-size: 10px;
+    }
+
+    #tab-profile .contact-icon {
+        width: 25px;
+        height: 25px;
+        flex-basis: 25px;
+        font-size: 11px;
+    }
+}

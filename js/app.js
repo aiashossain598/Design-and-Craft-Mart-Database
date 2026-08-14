@@ -133,6 +133,8 @@ let currentContentFilter = "all";
 
         currentProfile = profile;
 
+        updateUserInterface();
+        renderBusinessCard(currentProfile);
 
         // ----------------------------------------------------
         // Setup user information
@@ -1009,9 +1011,7 @@ document.getElementById('downloadBusinessCard')?.addEventListener('click', async
 const flipButton = document.getElementById('flipCardBtn');
 const businessCard = document.getElementById('businessCard');
 if (businessCard && flipButton) {
-    const toggleBusinessCardFlip = () => {
-        businessCard.classList.toggle('is-flipped');
-    };
+    
 
     flipButton.addEventListener('click', toggleBusinessCardFlip);
     businessCard.addEventListener('click', toggleBusinessCardFlip);
@@ -6635,69 +6635,115 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* =========================================================
-   RENDER BUSINESS CARD FROM PROFILE
+   FINAL BUSINESS CARD RENDERER
 ========================================================= */
 
 function renderBusinessCard(profile) {
 
     if (!profile) return;
 
-
     const name =
         profile.full_name ||
-        profile.name ||
-        "Your Name";
-
-
-    const role =
-        profile.role ||
-        profile.position ||
         "Partner";
 
+    const role =
+        profile.position ||
+        profile.job_title ||
+        profile.role ||
+        "Partner";
 
     const phone =
-        profile.phone ||
-        "Phone not added";
-
+        profile.mobile ||
+        "";
 
     const email =
+        currentUser?.email ||
         profile.email ||
-        "Email not added";
-
+        "";
 
     const website =
         profile.website ||
-        "www.designandcraftmart.com";
+        profile.website_url ||
+        profile.web_url ||
+        "";
 
-
-    const nameElement =
+    const nameEl =
         document.getElementById("cardPersonName");
 
-    const roleElement =
+    const roleEl =
         document.getElementById("cardPersonRole");
 
-    const phoneElement =
+    const phoneEl =
         document.getElementById("cardPhone");
 
-    const emailElement =
+    const phoneRow =
+        document.getElementById("cardPhoneRow");
+
+    const emailEl =
         document.getElementById("cardEmail");
 
-    const websiteElement =
+    const emailRow =
+        document.getElementById("cardEmailRow");
+
+    const websiteEl =
         document.getElementById("cardWebsite");
 
+    const websiteRow =
+        document.getElementById("cardWebsiteRow");
 
-    if (nameElement)
-        nameElement.textContent = name;
 
-    if (roleElement)
-        roleElement.textContent = role;
+    /* NAME */
 
-    if (phoneElement)
-        phoneElement.textContent = phone;
+    if (nameEl) {
+        nameEl.textContent = name;
+    }
 
-    if (emailElement)
-        emailElement.textContent = email;
 
-    if (websiteElement)
-        websiteElement.textContent = website;
+    /* POSITION */
+
+    if (roleEl) {
+        roleEl.textContent = role;
+    }
+
+
+    /* PHONE */
+
+    if (phoneEl) {
+        phoneEl.textContent = phone;
+    }
+
+    if (phoneRow) {
+        phoneRow.classList.toggle(
+            "is-hidden",
+            !phone
+        );
+    }
+
+
+    /* EMAIL */
+
+    if (emailEl) {
+        emailEl.textContent = email;
+    }
+
+    if (emailRow) {
+        emailRow.classList.toggle(
+            "is-hidden",
+            !email
+        );
+    }
+
+
+    /* WEBSITE */
+
+    if (websiteEl) {
+        websiteEl.textContent = website;
+    }
+
+    if (websiteRow) {
+        websiteRow.classList.toggle(
+            "is-hidden",
+            !website
+        );
+    }
 }
