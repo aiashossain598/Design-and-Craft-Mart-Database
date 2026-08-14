@@ -6747,3 +6747,14 @@ function renderBusinessCard(profile) {
         );
     }
 }
+
+function toggleBusinessCardFlip() {
+    const card = document.querySelector('.business-card');
+
+    if (!card) {
+        console.warn('Business card element not found.');
+        return;
+    }
+
+    card.classList.toggle('flipped');
+}
