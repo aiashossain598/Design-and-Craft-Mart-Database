@@ -7,89 +7,372 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" type="image/png" href="assets/logo.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+.join-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background:
+        radial-gradient(circle at 15% 15%, rgba(211,166,83,.12), transparent 30%),
+        radial-gradient(circle at 85% 85%, rgba(211,166,83,.08), transparent 30%),
+        linear-gradient(135deg, #070707, #11110f, #080808);
+}
+
+.join-card {
+    width: min(720px, 100%);
+    padding: 38px;
+    background: linear-gradient(145deg, #171717, #090909);
+    border: 1px solid rgba(211,166,83,.30);
+    border-radius: 18px;
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.55),
+        inset 0 1px rgba(255,255,255,.03);
+}
+
+.join-brand {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.join-logo {
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 12px;
+}
+
+.join-brand h1 {
+    margin: 0;
+    color: var(--gold-light);
+    font-family: Georgia, serif;
+    font-size: 27px;
+    letter-spacing: 3px;
+}
+
+.join-brand p {
+    margin: 8px 0 0;
+    color: #777;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.join-intro {
+    text-align: center;
+    color: #929292;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0 auto 28px;
+    max-width: 600px;
+}
+
+.join-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.join-field {
+    width: 100%;
+}
+
+.join-field.full {
+    grid-column: 1 / -1;
+}
+
+.join-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #d0d0d0;
+    font-size: 13px;
+}
+
+.join-field input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    border: 1px solid #353535;
+    border-radius: 9px;
+    background: #0c0c0c;
+    color: #f1eee7;
+    font-size: 14px;
+    outline: none;
+}
+
+.join-field input::placeholder {
+    color: #555;
+}
+
+.join-field input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(211,166,83,.09);
+}
+
+.join-divider {
+    grid-column: 1 / -1;
+    width: 100%;
+    border: 0;
+    border-top: 1px solid rgba(211,166,83,.18);
+    margin: 4px 0;
+}
+
+.join-section-title {
+    grid-column: 1 / -1;
+    color: var(--gold-light);
+    font-family: Georgia, serif;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+}
+
+.join-submit {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: 50px;
+    border: 0;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #e4bf78, #b98835);
+    color: #17120a;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.join-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(193,145,58,.18);
+}
+
+.join-message {
+    display: none;
+    grid-column: 1 / -1;
+    padding: 12px 14px;
+    border-radius: 9px;
+    font-size: 13px;
+}
+
+.join-login {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(211,166,83,.12);
+    text-align: center;
+    color: #777;
+    font-size: 13px;
+}
+
+.join-login a {
+    color: var(--gold-light);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* MOBILE */
+@media (max-width: 640px) {
+
+    .join-page {
+        padding: 20px 12px;
+        align-items: flex-start;
+    }
+
+    .join-card {
+        padding: 25px 18px;
+        border-radius: 14px;
+    }
+
+    .join-form {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .join-field.full,
+    .join-divider,
+    .join-section-title,
+    .join-submit,
+    .join-message {
+        grid-column: 1;
+    }
+
+    .join-brand h1 {
+        font-size: 21px;
+    }
+
+    .join-intro {
+        font-size: 13px;
+    }
+}
+</style>
+
 </head>
-<body>
+<body class="join-page">
 
-<div class="auth-wrap">
-  <div class="auth-card" style="max-width:440px;">
-    <div class="brand">Team Hub</div>
-    <p class="sub">টিমে যোগ হওয়ার জন্য নিচের ফর্মটা পূরণ করো। Admin রিভিউ করে approve করলে তুমি লগইন করতে পারবে।</p>
+<main class="join-card">
 
-    <div class="error-msg" id="msgBox"></div>
+    <div class="join-brand">
 
-    <form id="joinForm">
-      <label>পূর্ণ নাম *</label>
-      <input type="text" id="fullName" required>
+        <img
+            src="assets/logo.png"
+            class="join-logo"
+            alt="Design and Craft Mart logo"
+        >
 
-      <label>মোবাইল নাম্বার *</label>
-      <input type="tel" id="mobile" required>
+        <h1>TEAM HUB</h1>
 
-      <label>ঠিকানা *</label>
-      <input type="text" id="address" required>
+        <p>Design and Craft Mart</p>
 
-      <label>Facebook Profile লিংক / আইডি নাম</label>
-      <input type="text" id="fbProfile" placeholder="facebook.com/yourname">
+    </div>
 
-      <hr style="border-color:var(--border); margin: 22px 0;">
 
-      <label>Email (লগইনের জন্য) *</label>
-      <input type="email" id="email" required>
+    <p class="join-intro">
+        টিমে যোগ দেওয়ার জন্য নিচের ফর্মটি পূরণ করুন।
+        Admin রিভিউ করে approve করার পরেই আপনি লগইন করতে পারবেন।
+    </p>
 
-      <label>Password (নিজে সেট করো) *</label>
-      <input type="password" id="password" required minlength="6">
 
-      <button type="submit" class="btn-primary" id="submitBtn">রিকোয়েস্ট পাঠাও</button>
+    <div
+        class="join-message"
+        id="msgBox"
+        role="alert"
+    ></div>
+
+
+    <form
+        id="joinForm"
+        class="join-form"
+    >
+
+        <div class="join-field">
+
+            <label for="fullName">
+                পূর্ণ নাম *
+            </label>
+
+            <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                autocomplete="name"
+                required
+            >
+
+        </div>
+
+
+        <div class="join-field">
+
+            <label for="mobile">
+                মোবাইল নাম্বার *
+            </label>
+
+            <input
+                type="tel"
+                id="mobile"
+                name="mobile"
+                autocomplete="tel"
+                required
+            >
+
+        </div>
+
+
+        <div class="join-field full">
+
+            <label for="address">
+                ঠিকানা *
+            </label>
+
+            <input
+                type="text"
+                id="address"
+                name="address"
+                autocomplete="street-address"
+                required
+            >
+
+        </div>
+
+
+        <div class="join-field full">
+
+            <label for="fbProfile">
+                Facebook Profile লিংক / আইডি নাম
+            </label>
+
+            <input
+                type="text"
+                id="fbProfile"
+                name="fbProfile"
+                placeholder="facebook.com/yourname"
+                autocomplete="url"
+            >
+
+        </div>
+
+
+        <hr class="join-divider">
+
+
+        <div class="join-section-title">
+            Login Information
+        </div>
+
+
+        <div class="join-field">
+
+            <label for="email">
+                Email (লগইনের জন্য) *
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                autocomplete="email"
+                required
+            >
+
+        </div>
+
+
+        <div class="join-field">
+
+            <label for="password">
+                Password (নিজে সেট করো) *
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="new-password"
+                minlength="6"
+                required
+            >
+
+        </div>
+
+
+        <button
+            type="submit"
+            class="join-submit"
+            id="submitBtn"
+        >
+            রিকোয়েস্ট পাঠাও
+        </button>
+
     </form>
 
-    <div class="auth-toggle">
-      আগে থেকে approved account আছে? <a href="index.html">লগইন করো</a>
+
+    <div class="join-login">
+
+        আগে থেকে approved account আছে?
+
+        <a href="index.html">
+            লগইন করো
+        </a>
+
     </div>
-  </div>
-</div>
 
-<script src="js/supabase-config.js"></script>
-<script>
-const form = document.getElementById("joinForm");
-const submitBtn = document.getElementById("submitBtn");
-const msgBox = document.getElementById("msgBox");
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  msgBox.style.display = "none";
-  submitBtn.disabled = true;
-  submitBtn.textContent = "পাঠানো হচ্ছে...";
-
-  const full_name = document.getElementById("fullName").value.trim();
-  const mobile = document.getElementById("mobile").value.trim();
-  const address = document.getElementById("address").value.trim();
-  const fb_profile = document.getElementById("fbProfile").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-
-  const { error } = await supabaseClient.auth.signUp({
-    email,
-    password,
-    options: { data: { full_name, mobile, address, fb_profile } },
-  });
-
-  if (error) {
-    msgBox.textContent = error.message;
-    msgBox.style.display = "block";
-    submitBtn.disabled = false;
-    submitBtn.textContent = "রিকোয়েস্ট পাঠাও";
-    return;
-  }
-
-  // যেহেতু approve হওয়ার আগে ঢুকতে দেওয়া যাবে না, সাথে সাথে সাইন আউট করে দিচ্ছি
-  await supabaseClient.auth.signOut();
-
-  form.style.display = "none";
-  msgBox.style.background = "#1f3a33";
-  msgBox.style.color = "#4fd8b8";
-  msgBox.style.borderColor = "#2c5a4d";
-  msgBox.textContent = "রিকোয়েস্ট জমা হয়েছে। Admin approve করলেই তুমি লগইন করতে পারবে।";
-  msgBox.style.display = "block";
-});
-</script>
-</body>
+</main>
 </html>
