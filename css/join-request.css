@@ -1,0 +1,536 @@
+/* =========================================================
+   JOIN REQUEST PAGE
+   PREMIUM DESIGN
+========================================================= */
+
+:root {
+    --jr-bg: #070707;
+    --jr-panel: #111111;
+    --jr-panel-2: #0b0b0b;
+
+    --jr-gold: #d3a653;
+    --jr-gold-light: #e7c67f;
+
+    --jr-text: #f3f0e8;
+    --jr-muted: #888;
+
+    --jr-border: rgba(211, 166, 83, .25);
+    --jr-danger: #e2604f;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    color: var(--jr-text);
+
+    font-family:
+        Inter,
+        Arial,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(211,166,83,.10),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 85% 90%,
+            rgba(211,166,83,.06),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #050505,
+            #111111,
+            #070707
+        );
+}
+
+
+/* =========================================================
+   WRAPPER
+========================================================= */
+
+.auth-wrap {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+
+    position: relative;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.auth-card {
+
+    width: min(720px, 100%);
+
+    padding: 42px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,25,25,.97),
+            rgba(10,10,10,.98)
+        );
+
+    border:
+        1px solid
+        var(--jr-border);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.60),
+        inset 0 1px rgba(255,255,255,.025);
+}
+
+
+/* decorative circle */
+
+.auth-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    right: -250px;
+    top: -260px;
+
+    border:
+        1px solid
+        rgba(211,166,83,.12);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+.auth-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    left: -210px;
+    bottom: -220px;
+
+    border:
+        1px solid
+        rgba(211,166,83,.08);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 12px;
+
+    color:
+        var(--jr-gold-light);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    z-index: 2;
+}
+
+
+.brand::before {
+
+    content: "";
+
+    width: 55px;
+    height: 55px;
+
+    flex-shrink: 0;
+
+    background:
+        url("../assets/logo.png")
+        center / contain
+        no-repeat;
+
+    filter:
+        drop-shadow(
+            0 8px 18px
+            rgba(211,166,83,.18)
+        );
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.sub {
+
+    position: relative;
+
+    margin: 0 0 30px;
+
+    color:
+        var(--jr-muted);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    z-index: 2;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+#joinForm {
+
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+
+    z-index: 2;
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+#joinForm label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #d2d2d2;
+
+    font-size: 13px;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+#joinForm input {
+
+    width: 100%;
+
+    height: 48px;
+
+    padding:
+        0 14px;
+
+    margin: 0;
+
+    color: #f4f1ea;
+
+    background:
+        #0b0b0b;
+
+    border:
+        1px solid
+        #343434;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+
+#joinForm input::placeholder {
+
+    color: #5e5e5e;
+}
+
+
+#joinForm input:focus {
+
+    background: #0d0d0d;
+
+    border-color:
+        var(--jr-gold);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(211,166,83,.08);
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+#joinForm hr {
+
+    grid-column:
+        1 / -1;
+
+    width: 100%;
+
+    margin:
+        8px 0 4px !important;
+
+    border: 0 !important;
+
+    border-top:
+        1px solid
+        rgba(211,166,83,.18) !important;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+#joinForm button {
+
+    grid-column:
+        1 / -1;
+
+    width: 100%;
+
+    height: 50px;
+
+    margin-top: 4px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e4bf78,
+            #b98835
+        );
+
+    color: #17120a;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        opacity .2s ease;
+}
+
+
+#joinForm button:hover {
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(193,145,58,.20);
+}
+
+
+#joinForm button:disabled {
+
+    opacity: .6;
+
+    cursor: wait;
+}
+
+
+/* =========================================================
+   ERROR / SUCCESS MESSAGE
+========================================================= */
+
+.error-msg {
+
+    position: relative;
+
+    display: none;
+
+    margin-bottom: 18px;
+
+    padding: 12px 14px;
+
+    border:
+        1px solid
+        rgba(200,75,65,.35);
+
+    border-radius: 9px;
+
+    background:
+        rgba(110,35,30,.25);
+
+    color: #e9a29a;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    z-index: 3;
+}
+
+
+/* =========================================================
+   LOGIN LINK
+========================================================= */
+
+.auth-toggle {
+
+    position: relative;
+
+    margin-top: 22px;
+
+    color:
+        var(--jr-muted);
+
+    font-size: 13px;
+
+    text-align: center;
+
+    z-index: 2;
+}
+
+
+.auth-toggle a {
+
+    color:
+        var(--jr-gold-light);
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+.auth-toggle a:hover {
+
+    text-decoration:
+        underline;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 680px) {
+
+    .auth-wrap {
+
+        padding:
+            24px 14px;
+
+        align-items:
+            flex-start;
+    }
+
+
+    .auth-card {
+
+        padding:
+            28px 20px;
+
+        border-radius:
+            16px;
+    }
+
+
+    .brand {
+
+        font-size:
+            24px;
+    }
+
+
+    .brand::before {
+
+        width: 44px;
+        height: 44px;
+    }
+
+
+    #joinForm {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 15px;
+    }
+
+
+    #joinForm hr,
+    #joinForm button {
+
+        grid-column:
+            1;
+    }
+}
