@@ -6784,3 +6784,99 @@ window.toggleBusinessCardFlip = function () {
     }
 
 };
+
+function setupMobileNavigation() {
+
+    const menuButton =
+        document.getElementById("mobileMenuBtn");
+
+    const menuClose =
+        document.getElementById("mobileMenuClose");
+
+    const overlay =
+        document.getElementById("mobileMenuOverlay");
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    if (!menuButton || !menuClose || !overlay || !mobileMenu) {
+        return;
+    }
+
+    function openMenu() {
+
+        document.body.classList.add("mobile-menu-open");
+
+        menuButton.setAttribute("aria-expanded", "true");
+
+        mobileMenu.setAttribute("aria-hidden", "false");
+        overlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeMenu() {
+
+        document.body.classList.remove("mobile-menu-open");
+
+        menuButton.setAttribute("aria-expanded", "false");
+
+        mobileMenu.setAttribute("aria-hidden", "true");
+        overlay.setAttribute("aria-hidden", "true");
+    }
+
+    menuButton.addEventListener("click", openMenu);
+
+    menuClose.addEventListener("click", closeMenu);
+
+    overlay.addEventListener("click", closeMenu);
+
+
+    document
+        .querySelectorAll(".mobile-nav .nav-item")
+        .forEach(item => {
+
+            item.addEventListener("click", () => {
+
+                const tab =
+                    item.getAttribute("data-tab");
+
+                /*
+                 * IMPORTANT:
+                 * Use the existing desktop nav item.
+                 * This prevents us from creating a second
+                 * tab-switching system.
+                 */
+                const desktopItem =
+                    document.querySelector(
+                        `.sidebar-nav .nav-item[data-tab="${tab}"]`
+                    );
+
+                if (desktopItem) {
+                    desktopItem.click();
+                }
+
+                closeMenu();
+
+            });
+
+        });
+
+
+    const mobileLogout =
+        document.getElementById("mobileLogoutBtn");
+
+    if (mobileLogout) {
+
+        mobileLogout.addEventListener("click", () => {
+
+            const desktopLogout =
+                document.querySelector(".logout-link");
+
+            if (desktopLogout) {
+                desktopLogout.click();
+            }
+
+        });
+
+    }
+
+}
