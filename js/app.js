@@ -235,6 +235,27 @@ function updateUserInterface() {
         fullName.split(" ")[0] ||
         "Partner";
 
+    const roleOrPosition =
+        currentProfile.position ||
+        currentProfile.job_title ||
+        currentProfile.role ||
+        "Partner";
+
+    const phone =
+        currentProfile.mobile ||
+        "";
+
+    const email =
+        currentUser.email ||
+        "";
+
+    const website =
+        currentProfile.website ||
+        currentProfile.website_url ||
+        currentProfile.web_url ||
+        currentProfile.fb_profile ||
+        "";
+
 
     // --------------------------------------------------------
     // Sidebar user
@@ -297,10 +318,7 @@ function updateUserInterface() {
         document.getElementById("profilePosition");
 
     if (profilePosition) {
-
-        const roleOrPosition = currentProfile.position || currentProfile.job_title || currentProfile.role || "Partner";
         profilePosition.textContent = roleOrPosition;
-
     }
 
 
@@ -325,6 +343,48 @@ function updateUserInterface() {
             currentProfile.mobile ||
             "—";
 
+    }
+
+
+    // --------------------------------------------------------
+    // Business card
+    // --------------------------------------------------------
+
+    const cardName = document.getElementById("cardPersonName");
+    if (cardName) {
+        cardName.textContent = fullName;
+    }
+
+    const cardRole = document.getElementById("cardPersonRole");
+    if (cardRole) {
+        cardRole.textContent = roleOrPosition;
+    }
+
+    const cardPhone = document.getElementById("cardPhone");
+    const cardPhoneRow = document.getElementById("cardPhoneRow");
+    if (cardPhone) {
+        cardPhone.textContent = phone || "";
+    }
+    if (cardPhoneRow) {
+        cardPhoneRow.classList.toggle("is-hidden", !phone);
+    }
+
+    const cardEmail = document.getElementById("cardEmail");
+    const cardEmailRow = document.getElementById("cardEmailRow");
+    if (cardEmail) {
+        cardEmail.textContent = email || "";
+    }
+    if (cardEmailRow) {
+        cardEmailRow.classList.toggle("is-hidden", !email);
+    }
+
+    const cardWebsite = document.getElementById("cardWebsite");
+    const cardWebsiteRow = document.getElementById("cardWebsiteRow");
+    if (cardWebsite) {
+        cardWebsite.textContent = website || "";
+    }
+    if (cardWebsiteRow) {
+        cardWebsiteRow.classList.toggle("is-hidden", !website);
     }
 
 
@@ -905,12 +965,12 @@ document.getElementById('profileAvatarEditBtn')?.addEventListener('click', async
 });
 
 // ------------------------------------------------------------
-// Download Card button placeholder
+// Download Card button
 // ------------------------------------------------------------
 
-document.getElementById('downloadCardBtn')?.addEventListener('click', async () => {
-    const el = document.querySelector('.profile-business-card .business-card-frame');
-    if (!el) {
+document.getElementById('downloadBusinessCard')?.addEventListener('click', async () => {
+    const card = document.getElementById('businessCard');
+    if (!card) {
         showToast('Business card not found on the page.', 'error');
         return;
     }
@@ -921,67 +981,41 @@ document.getElementById('downloadCardBtn')?.addEventListener('click', async () =
     }
 
     try {
-        // Ensure element is fully rendered
         await new Promise(r => setTimeout(r, 80));
-        const canvas = await html2canvas(el, { backgroundColor: null, scale: 2 });
-        canvas.toBlob((blob) => {
-            if (!blob) {
-                showToast('Unable to generate image.', 'error');
-                return;
-            }
-            const a = document.createElement('a');
-            const filename = `${(currentProfile?.full_name || 'business-card').replace(/[^a-z0-9-_.]/gi, '_')}.png`;
-            a.href = URL.createObjectURL(blob);
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            setTimeout(() => URL.revokeObjectURL(a.href), 10000);
-            showToast('Business card downloaded.', 'success');
-        }, 'image/png');
+        const canvas = await html2canvas(card, {
+            backgroundColor: null,
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            scrollX: 0,
+            scrollY: 0
+        });
+
+        const dataUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        const filename = `${(currentProfile?.full_name || 'business-card').replace(/[^a-z0-9-_.]/gi, '_')}.png`;
+        link.href = dataUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        showToast('Business card downloaded.', 'success');
     } catch (err) {
         console.error('Download card error:', err);
         showToast('Unable to download card: ' + (err?.message || err), 'error');
     }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+const flipButton = document.getElementById('flipCardBtn');
+const businessCard = document.getElementById('businessCard');
+if (businessCard && flipButton) {
+    const toggleBusinessCardFlip = () => {
+        businessCard.classList.toggle('is-flipped');
+    };
 
-    const downloadButton =
-        document.getElementById("downloadBusinessCard");
-
-    if (!downloadButton) return;
-
-
-    downloadButton.addEventListener("click", () => {
-
-        alert(
-            "Business card download will be connected to the final card renderer."
-        );
-
-    });
-
-});
-
-// ------------------------------------------------------------
-// Business card side toggle (Front / Back)
-// ------------------------------------------------------------
-(function setupBusinessCardToggle(){
-    const frame = document.querySelector('.business-card-frame');
-    const sideBtns = document.querySelectorAll('.business-card-side-toggle .side-btn');
-    if (!frame || !sideBtns || sideBtns.length === 0) return;
-    sideBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const side = btn.dataset.side;
-            sideBtns.forEach(b => { b.classList.toggle('active', b === btn); b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
-            if (side === 'back') {
-                frame.classList.add('show-back');
-            } else {
-                frame.classList.remove('show-back');
-            }
-        });
-    });
-})();
+    flipButton.addEventListener('click', toggleBusinessCardFlip);
+    businessCard.addEventListener('click', toggleBusinessCardFlip);
+}
 
 
 // ------------------------------------------------------------

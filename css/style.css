@@ -7658,71 +7658,6 @@ tr:last-child td {
 }
 
 
-/* -------------------------
-   HEADER
-------------------------- */
-
-.business-card-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.business-card-header h2 {
-    margin: 5px 0 0;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 25px;
-    font-weight: 500;
-    color: #f3eee5;
-}
-
-.section-label {
-    font-family: Arial, sans-serif;
-    font-size: 10px;
-    letter-spacing: 4px;
-    color: #dca93f;
-}
-
-
-/* -------------------------
-   FLIP BUTTON
-------------------------- */
-
-.card-flip-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    height: 40px;
-    padding: 0 16px;
-
-    border: 1px solid rgba(218, 169, 61, 0.35);
-    border-radius: 8px;
-
-    background: rgba(20, 19, 17, 0.8);
-
-    color: #dca93f;
-
-    font-size: 13px;
-    cursor: pointer;
-
-    transition:
-        background .25s ease,
-        border-color .25s ease,
-        transform .25s ease;
-}
-
-.card-flip-button span {
-    font-size: 20px;
-}
-
-.card-flip-button:hover {
-    background: rgba(218, 169, 61, 0.12);
-    border-color: #dca93f;
-    transform: translateY(-1px);
-}
-
 
 /* =========================================================
    CARD 3D SCENE
@@ -7868,324 +7803,192 @@ tr:last-child td {
 ========================================================= */
 
 .card-gold-pattern {
-    position: absolute;
-
-    z-index: 1;
-
-    top: -20%;
-    right: -8%;
-
-    width: 42%;
-    height: 140%;
-
-    opacity: .35;
-
-    background:
-        repeating-linear-gradient(
-            45deg,
-            transparent 0px,
-            transparent 12px,
-            rgba(205,158,52,.55) 13px,
-            transparent 14px
-        ),
-        repeating-linear-gradient(
-            -45deg,
-            transparent 0px,
-            transparent 12px,
-            rgba(205,158,52,.35) 13px,
-            transparent 14px
-        );
-
-    clip-path: polygon(
-        28% 0,
-        100% 0,
-        100% 100%,
-        28% 100%,
-        0 50%
-    );
+   position: absolute;
+   z-index: 1;
+   top: -20%;
+   right: -8%;
+   width: 42%;
+   height: 140%;
+   opacity: .35;
+   background: repeating-linear-gradient(45deg, transparent 0px, transparent 12px, rgba(205,158,52,.55) 13px, transparent 14px), repeating-linear-gradient(-45deg, transparent 0px, transparent 12px, rgba(205,158,52,.35) 13px, transparent 14px);
+   clip-path: polygon(28% 0, 100% 0, 100% 100%, 28% 100%, 0 50%);
 }
-
-
-/* diagonal gold line */
 
 .card-gold-diagonal {
-    position: absolute;
-
-    z-index: 3;
-
-    top: -15%;
-    right: 17%;
-
-    width: 5px;
-    height: 135%;
-
-    background:
-        linear-gradient(
-            180deg,
-            #ffe39a,
-            #bd8120,
-            #ffe8a5,
-            #b97918
-        );
-
-    transform: rotate(43deg);
-
-    box-shadow:
-        0 0 10px rgba(224,170,57,.5);
+   position: absolute;
+   z-index: 3;
+   top: -15%;
+   right: 17%;
+   width: 5px;
+   height: 135%;
+   background: linear-gradient(180deg, #ffe39a, #bd8120, #ffe8a5, #b97918);
+   transform: rotate(43deg);
+   box-shadow: 0 0 10px rgba(224,170,57,.5);
 }
-
-
-/* =========================================================
-   BACK
-========================================================= */
 
 .business-card-back {
-    transform: rotateY(180deg);
-
-    display: flex;
-
-    align-items: center;
-
-    padding: 0 5%;
-
-    box-sizing: border-box;
+   transform: rotateY(180deg);
+   display: flex;
+   align-items: stretch;
+   box-sizing: border-box;
 }
 
-
-/* left */
+.business-card-back-inner {
+   position: relative;
+   z-index: 5;
+   display: grid;
+   grid-template-columns: minmax(0, 1.48fr) 1px minmax(0, 0.92fr);
+   width: 100%;
+   height: 100%;
+   gap: 0;
+   padding: 26px 20px 22px 24px;
+   box-sizing: border-box;
+   align-items: center;
+}
 
 .card-back-left {
-    position: relative;
-
-    z-index: 5;
-
-    width: 48%;
-
-    padding-left: 2%;
+   min-width: 0;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   padding-right: 10px;
 }
 
 
 /* name */
 
-.card-person-name {
-    color: #e5b84d;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: clamp(25px, 4vw, 40px);
-
-    line-height: 1.1;
-
-    white-space: nowrap;
-
-    text-shadow:
-        0 2px 4px rgba(0,0,0,.8);
+.card-user-name {
+   color: #e5b84d;
+   font-family: Georgia, "Times New Roman", serif;
+   font-size: clamp(20px, 3vw, 36px);
+   line-height: 1.1;
+   overflow-wrap: anywhere;
+   word-break: break-word;
+   text-shadow: 0 2px 4px rgba(0,0,0,.8);
 }
 
-
-/* role */
-
-.card-person-role {
-    margin-top: 10px;
-
-    color: #e0b24a;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: clamp(16px, 2vw, 22px);
+.card-user-title {
+   margin-top: 10px;
+   color: #e0b24a;
+   font-family: Georgia, "Times New Roman", serif;
+   font-size: clamp(14px, 1.8vw, 22px);
+   line-height: 1.3;
+   overflow-wrap: anywhere;
+   word-break: break-word;
 }
-
-
-/* small line */
 
 .card-small-line {
-    width: 105px;
-
-    height: 2px;
-
-    margin:
-        14px 0
-        22px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #dca93f,
-            transparent
-        );
+   width: 104px;
+   height: 2px;
+   margin: 14px 0 18px;
+   background: linear-gradient(90deg, #dca93f, transparent);
 }
 
-
-/* contacts */
-
 .card-contact-list {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 16px;
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+   min-width: 0;
 }
 
 .card-contact {
-    display: flex;
-
-    align-items: center;
-
-    gap: 13px;
-
-    color: #f0ece5;
-
-    font-family: Arial, sans-serif;
-
-    font-size: clamp(11px, 1.5vw, 16px);
-
-    white-space: nowrap;
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   min-width: 0;
+   color: #f0ece5;
+   font-family: Arial, sans-serif;
+   font-size: clamp(11px, 1.4vw, 16px);
+   line-height: 1.35;
 }
 
+.card-contact span {
+   display: block;
+   min-width: 0;
+   overflow-wrap: anywhere;
+   word-break: break-word;
+}
 
-/* icon */
+.card-contact.is-hidden {
+   display: none;
+}
 
 .contact-icon {
-    flex-shrink: 0;
-
-    width: 34px;
-    height: 34px;
-
-    border: 1px solid #e0b248;
-
-    border-radius: 50%;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    color: #e3b448;
-
-    font-size: 17px;
+   flex-shrink: 0;
+   width: 30px;
+   height: 30px;
+   border: 1px solid #e0b248;
+   border-radius: 50%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   color: #e3b448;
+   font-size: 15px;
 }
 
-
-/* =========================================================
-   CENTER DIVIDER
-========================================================= */
-
 .card-back-divider {
-    position: relative;
-
-    z-index: 5;
-
-    width: 1px;
-
-    height: 68%;
-
-    margin:
-        0 5%;
-
-    background:
-        linear-gradient(
-            transparent,
-            #dca93f,
-            #dca93f,
-            transparent
-        );
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
+   position: relative;
+   z-index: 5;
+   height: 68%;
+   margin: 0 6%;
+   background: linear-gradient(transparent, #dca93f, #dca93f, transparent);
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 .card-back-divider b {
-    position: absolute;
-
-    color: #e1b148;
-
-    background: #0c0c0b;
-
-    padding: 7px 4px;
-
-    font-size: 18px;
+   position: absolute;
+   color: #e1b148;
+   background: #0c0c0b;
+   padding: 7px 4px;
+   font-size: 18px;
 }
-
-
-/* =========================================================
-   BACK RIGHT
-========================================================= */
 
 .card-back-right {
-    position: relative;
-
-    z-index: 5;
-
-    width: 40%;
-
-    text-align: center;
-
-    margin-right: 4%;
+   position: relative;
+   z-index: 5;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   min-width: 0;
+   text-align: center;
+   padding-left: 8px;
 }
-
-
-/* back logo */
 
 .card-back-logo {
-    width: 105px;
-
-    height: 105px;
-
-    object-fit: contain;
-
-    margin: 0 auto 2px;
-
-    display: block;
+   width: 30%;
+   max-width: 118px;
+   height: auto;
+   object-fit: contain;
+   display: block;
+   margin: 0 auto 10px;
 }
-
-
-/* company */
 
 .card-back-company {
-    display: flex;
-
-    flex-direction: column;
-
-    color: #e2b34b;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: clamp(18px, 2.5vw, 28px);
-
-    font-weight: 600;
-
-    line-height: 1.05;
+   display: flex;
+   flex-direction: column;
+   color: #e2b34b;
+   font-family: Georgia, "Times New Roman", serif;
+   font-size: clamp(16px, 2.4vw, 26px);
+   font-weight: 600;
+   line-height: 1.05;
+   letter-spacing: 0.02em;
 }
 
-
-/* small divider */
+.card-back-company span {
+   display: block;
+}
 
 .card-divider-small {
-    width: 80%;
-
-    margin-top: 13px;
-    margin-bottom: 7px;
+   width: 75%;
+   margin-top: 12px;
+   margin-bottom: 0;
 }
 
 .card-divider-small b {
-    font-size: 15px;
-}
-
-.card-back-right .card-tagline {
-    font-size: 11px;
+   font-size: 15px;
 }
 
 
