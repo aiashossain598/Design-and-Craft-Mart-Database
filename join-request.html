@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" type="image/png" href="assets/logo.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -104,16 +105,25 @@ document.addEventListener("DOMContentLoaded", () => {
              * Create the authentication account.
              */
 
-            const {
-                data: authData,
-                error: authError
-            } = await supabaseClient.auth.signUp({
+           const {
+    data: authData,
+    error: authError
+} = await supabaseClient.auth.signUp({
 
-                email: email,
+    email: email,
 
-                password: password
+    password: password,
 
-            });
+    options: {
+        data: {
+            full_name: fullName,
+            mobile: mobile,
+            address: address,
+            fb_profile: fbProfile || ""
+        }
+    }
+
+});
 
 
             if (authError) {
@@ -137,47 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     "Account could not be created."
                 );
 
-            }
-
-
-            /*
-             * STEP 2
-             * Create the pending profile/request.
-             */
-
-            const {
-                error: profileError
-            } = await supabaseClient
-                .from("user_profiles")
-                .insert({
-
-                    id: user.id,
-
-                    full_name: fullName,
-
-                    mobile: mobile,
-
-                    address: address,
-
-                    fb_profile: fbProfile || null,
-
-                    email: email,
-
-                    role: "partner",
-
-                    status: "pending"
-
-                });
-
-
-            if (profileError) {
-
-                console.error(
-                    "Profile insert error:",
-                    profileError
-                );
-
-                throw profileError;
             }
 
 
