@@ -8645,3 +8645,93 @@ tr:last-child td {
         font-size: 11px;
     }
 }
+
+/* =========================================================
+   FINAL PROFILE + BUSINESS CARD ALIGNMENT
+   ========================================================= */
+
+@media (min-width: 951px) {
+
+    /* Main two-column profile area */
+    #tab-profile .profile-layout {
+        grid-template-columns: minmax(0, 1fr) 520px;
+        gap: 26px;
+        align-items: start;
+    }
+
+    /* LEFT PROFILE CARD */
+    #tab-profile .profile-card {
+        width: 100%;
+        min-height: 260px;
+
+        padding: 30px;
+        gap: 24px;
+
+        margin-top: 0;
+    }
+
+    /* RIGHT BUSINESS CARD SECTION */
+    #tab-profile .profile-business-card-section {
+        width: 100%;
+
+        /* pull entire business-card area upward */
+        margin-top: -38px;
+    }
+
+    /* Business card heading */
+    #tab-profile .business-card-header {
+        margin-bottom: 14px;
+    }
+
+    #tab-profile .business-card-header h2 {
+        margin-top: 5px;
+        margin-bottom: 0;
+    }
+
+    /* Actual card */
+    #tab-profile .business-card {
+        width: 100%;
+        max-width: 520px;
+
+        aspect-ratio: 1.586 / 1;
+
+        margin: 0 auto;
+    }
+
+    /* Keep card perfectly centered */
+    #tab-profile .business-card-scene {
+        width: 100%;
+        margin: 0;
+    }
+
+    /* Download button */
+    #tab-profile .business-card-actions {
+        margin-top: 14px;
+    }
+}
+
+
+/* =========================================================
+   SMALL DESKTOP / TABLET
+   ========================================================= */
+
+@media (min-width: 951px) and (max-width: 1200px) {
+
+    #tab-profile .profile-layout {
+        grid-template-columns: minmax(0, 1fr) 480px;
+        gap: 22px;
+    }
+
+    #tab-profile .profile-business-card-section {
+        margin-top: -30px;
+    }
+
+    #tab-profile .business-card {
+        max-width: 480px;
+    }
+
+    #tab-profile .profile-card {
+        min-height: 245px;
+        padding: 26px;
+    }
+}
