@@ -6758,3 +6758,29 @@ function toggleBusinessCardFlip() {
 
     card.classList.toggle('flipped');
 }
+
+// ============================================================
+// BUSINESS CARD FLIP FIX
+// ============================================================
+
+window.toggleBusinessCardFlip = function () {
+
+    const card = document.getElementById("businessCard");
+    const button = document.getElementById("flipCardBtn");
+
+    if (!card) return;
+
+    card.classList.toggle("is-flipped");
+
+    const flipped =
+        card.classList.contains("is-flipped");
+
+    if (button) {
+
+        button.innerHTML = flipped
+            ? '<span>↻</span> Front'
+            : '<span>↻</span> Flip Card';
+
+    }
+
+};
