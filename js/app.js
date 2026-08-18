@@ -174,6 +174,13 @@ let currentContentFilter = "all";
                 adminNav.style.display = "flex";
             }
 
+            const mobileAdminNav =
+                document.getElementById("mobileAdminNavItem");
+
+            if (mobileAdminNav) {
+                mobileAdminNav.style.display = "flex";
+            }
+
             await loadJoinRequests();
 
             await loadPendingContent();
@@ -7000,3 +7007,272 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+
+// ============================================================
+// MOBILE NAVIGATION
+// PHASE 1
+// ============================================================
+
+(function setupMobileNavigation() {
+
+    const menuBtn =
+        document.getElementById("mobileMenuBtn");
+
+    const menu =
+        document.getElementById("mobileMenu");
+
+    const overlay =
+        document.getElementById("mobileMenuOverlay");
+
+    const closeBtn =
+        document.getElementById("mobileMenuClose");
+
+    const mobileLogout =
+        document.getElementById("mobileLogoutBtn");
+
+    if (!menuBtn || !menu || !overlay) {
+        console.warn(
+            "Mobile navigation elements not found."
+        );
+
+        return;
+    }
+
+
+    function openMobileMenu() {
+
+        document.body.classList.add(
+            "mobile-menu-open"
+        );
+
+        menuBtn.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+        menu.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        overlay.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+    }
+
+
+    function closeMobileMenu() {
+
+        document.body.classList.remove(
+            "mobile-menu-open"
+        );
+
+        menuBtn.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        menu.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        overlay.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    menuBtn.addEventListener(
+        "click",
+        openMobileMenu
+    );
+
+
+    closeBtn?.addEventListener(
+        "click",
+        closeMobileMenu
+    );
+
+
+    overlay.addEventListener(
+        "click",
+        closeMobileMenu
+    );
+
+
+    // --------------------------------------------------------
+    // Mobile navigation tabs
+    // --------------------------------------------------------
+
+    menu
+        .querySelectorAll(".nav-item[data-tab]")
+        .forEach((item) => {
+
+            item.addEventListener(
+                "click",
+                () => {
+
+                    const tab =
+                        item.dataset.tab;
+
+                    if (!tab) {
+                        return;
+                    }
+
+
+                    // Use the existing desktop navigation
+                    // so both navigation systems stay synchronized.
+
+                    const desktopItem =
+                        document.querySelector(
+                            `.sidebar .nav-item[data-tab="${tab}"]`
+                        );
+
+
+                    if (desktopItem) {
+
+                        desktopItem.click();
+
+                    } else {
+
+                        // Fallback for tabs that may not
+                        // currently have a desktop nav item.
+
+                        const target =
+                            document.getElementById(
+                                `tab-${tab}`
+                            );
+
+                        if (target) {
+
+                            document
+                                .querySelectorAll(
+                                    "[id^='tab-']"
+                                )
+                                .forEach(
+                                    (section) => {
+                                        section.style.display =
+                                            "none";
+                                    }
+                                );
+
+                            target.style.display =
+                                "block";
+                        }
+
+                    }
+
+
+                    // Update mobile active state
+
+                    menu
+                        .querySelectorAll(
+                            ".nav-item[data-tab]"
+                        )
+                        .forEach(
+                            (nav) => {
+                                nav.classList.toggle(
+                                    "active",
+                                    nav.dataset.tab === tab
+                                );
+                            }
+                        );
+
+
+                    closeMobileMenu();
+
+                }
+            );
+
+        });
+
+
+    // --------------------------------------------------------
+    // Mobile logout
+    // --------------------------------------------------------
+
+    mobileLogout?.addEventListener(
+        "click",
+        async () => {
+
+            try {
+
+                if (
+                    typeof supabaseClient !==
+                    "undefined"
+                ) {
+
+                    await supabaseClient
+                        .auth
+                        .signOut();
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Mobile logout error:",
+                    error
+                );
+
+            } finally {
+
+                window.location.href =
+                    "index.html";
+
+            }
+
+        }
+    );
+
+
+    // --------------------------------------------------------
+    // Escape key
+    // --------------------------------------------------------
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Escape" &&
+                document.body.classList.contains(
+                    "mobile-menu-open"
+                )
+            ) {
+
+                closeMobileMenu();
+
+            }
+
+        }
+    );
+
+
+    // --------------------------------------------------------
+    // Close menu when resizing back to desktop
+    // --------------------------------------------------------
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            if (
+                window.innerWidth > 950
+            ) {
+
+                closeMobileMenu();
+
+            }
+
+        }
+    );
+
+
+})();

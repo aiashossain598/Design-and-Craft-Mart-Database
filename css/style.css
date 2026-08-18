@@ -9052,3 +9052,719 @@ tr:last-child td {
     }
 
 }
+
+/* =========================================================
+   DCM MOBILE FOUNDATION
+   PHASE 1
+========================================================= */
+
+/* ---------- GLOBAL MOBILE SAFETY ---------- */
+
+html {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+    max-width: 100%;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   MOBILE NAVIGATION
+========================================================= */
+
+.mobile-menu-btn {
+    display: none;
+}
+
+.mobile-brand {
+    display: none;
+}
+
+.mobile-menu,
+.mobile-menu-overlay {
+    display: none;
+}
+
+
+@media (max-width: 950px) {
+
+    /* -----------------------------------------------------
+       APP SHELL
+    ----------------------------------------------------- */
+
+    .app-shell {
+        width: 100%;
+        min-width: 0;
+        display: block;
+    }
+
+
+    /* -----------------------------------------------------
+       DESKTOP SIDEBAR
+    ----------------------------------------------------- */
+
+    .sidebar {
+        display: none !important;
+    }
+
+
+    /* -----------------------------------------------------
+       MAIN
+    ----------------------------------------------------- */
+
+    .main {
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+
+        padding:
+            0 16px 30px;
+
+        margin: 0;
+    }
+
+
+    /* -----------------------------------------------------
+       TOPBAR
+    ----------------------------------------------------- */
+
+    .topbar {
+        width: 100%;
+        height: 64px;
+
+        padding:
+            0 2px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        position: relative;
+        z-index: 100;
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE BRAND
+    ----------------------------------------------------- */
+
+    .mobile-brand {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        min-width: 0;
+    }
+
+
+    .mobile-brand > span {
+        color: var(--gold-light);
+
+        font-family: Georgia, serif;
+
+        font-size: 17px;
+        font-weight: 700;
+
+        letter-spacing: 3px;
+    }
+
+
+    /* -----------------------------------------------------
+       MENU BUTTON
+    ----------------------------------------------------- */
+
+    .mobile-menu-btn {
+        display: flex;
+
+        width: 42px;
+        height: 42px;
+
+        flex-shrink: 0;
+
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
+        border:
+            1px solid
+            var(--border);
+
+        border-radius: 10px;
+
+        background:
+            rgba(255,255,255,.03);
+
+        color:
+            var(--gold-light);
+
+        font-size: 20px;
+
+        line-height: 1;
+
+        transition:
+            background .2s ease,
+            border-color .2s ease,
+            transform .2s ease;
+    }
+
+
+    .mobile-menu-btn:hover,
+    .mobile-menu-btn:focus-visible {
+        background:
+            rgba(211,166,83,.08);
+
+        border-color:
+            rgba(211,166,83,.35);
+
+        outline: none;
+    }
+
+
+    .mobile-menu-btn:active {
+        transform: scale(.95);
+    }
+
+
+    /* -----------------------------------------------------
+       TOPBAR RIGHT
+    ----------------------------------------------------- */
+
+    .topbar-right {
+        min-width: 0;
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+    }
+
+
+    .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+
+    .notification-btn,
+    .profile-btn {
+        min-width: 40px;
+        min-height: 40px;
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE DRAWER OVERLAY
+    ----------------------------------------------------- */
+
+    .mobile-menu-overlay {
+        display: block;
+
+        position: fixed;
+
+        inset: 0;
+
+        z-index: 9998;
+
+        background:
+            rgba(0,0,0,.68);
+
+        backdrop-filter:
+            blur(4px);
+
+        -webkit-backdrop-filter:
+            blur(4px);
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        pointer-events: none;
+
+        transition:
+            opacity .25s ease,
+            visibility .25s ease;
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE DRAWER
+    ----------------------------------------------------- */
+
+    .mobile-menu {
+        display: flex;
+
+        position: fixed;
+
+        top: 0;
+        left: 0;
+
+        width:
+            min(310px, 86vw);
+
+        height: 100dvh;
+
+        max-height: 100dvh;
+
+        z-index: 9999;
+
+        flex-direction: column;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        padding:
+            24px 16px;
+
+        background:
+            linear-gradient(
+                180deg,
+                #101010 0%,
+                #070707 100%
+            );
+
+        border-right:
+            1px solid
+            var(--border);
+
+        box-shadow:
+            20px 0 60px
+            rgba(0,0,0,.45);
+
+        transform:
+            translateX(-105%);
+
+        transition:
+            transform .28s ease;
+
+        overscroll-behavior:
+            contain;
+    }
+
+
+    /* -----------------------------------------------------
+       OPEN STATE
+    ----------------------------------------------------- */
+
+    body.mobile-menu-open {
+        overflow: hidden;
+    }
+
+
+    body.mobile-menu-open .mobile-menu {
+        transform:
+            translateX(0);
+    }
+
+
+    body.mobile-menu-open .mobile-menu-overlay {
+        opacity: 1;
+
+        visibility: visible;
+
+        pointer-events: auto;
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE MENU HEADER
+    ----------------------------------------------------- */
+
+    .mobile-menu-header {
+        display: flex;
+
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 15px;
+
+        padding:
+            8px 8px 22px;
+
+        border-bottom:
+            1px solid
+            var(--border);
+    }
+
+
+    .mobile-menu-header strong {
+        display: block;
+
+        color:
+            var(--gold-light);
+
+        font-family:
+            Georgia, serif;
+
+        font-size: 13px;
+
+        letter-spacing: 2px;
+
+        line-height: 1.5;
+    }
+
+
+    .mobile-menu-header span {
+        display: block;
+
+        margin-top: 7px;
+
+        color:
+            #777;
+
+        font-size: 9px;
+
+        letter-spacing: 3px;
+    }
+
+
+    /* -----------------------------------------------------
+       CLOSE BUTTON
+    ----------------------------------------------------- */
+
+    .mobile-menu-close {
+        width: 38px;
+        height: 38px;
+
+        flex-shrink: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
+        border:
+            1px solid
+            var(--border);
+
+        border-radius: 9px;
+
+        background:
+            transparent;
+
+        color:
+            #aaa;
+
+        font-size: 24px;
+
+        line-height: 1;
+    }
+
+
+    .mobile-menu-close:hover,
+    .mobile-menu-close:focus-visible {
+        color:
+            var(--gold-light);
+
+        border-color:
+            rgba(211,166,83,.35);
+
+        outline: none;
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE NAV
+    ----------------------------------------------------- */
+
+    .mobile-nav {
+        width: 100%;
+
+        padding:
+            20px 0;
+    }
+
+
+    .mobile-nav .nav-item {
+        width: 100%;
+
+        margin:
+            0 0 6px;
+
+        padding:
+            15px 14px;
+
+        min-height: 50px;
+
+        font-size: 15px;
+
+        border-radius: 9px;
+    }
+
+
+    .mobile-nav .nav-icon {
+        width: 24px;
+
+        flex-shrink: 0;
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE LOGOUT
+    ----------------------------------------------------- */
+
+    .mobile-logout {
+        width: 100%;
+
+        margin-top: auto;
+
+        padding: 14px;
+
+        min-height: 48px;
+
+        border:
+            1px solid
+            rgba(226,96,79,.25);
+
+        border-radius: 9px;
+
+        background:
+            rgba(226,96,79,.05);
+
+        color:
+            var(--danger);
+
+        font-size: 14px;
+
+        text-align: left;
+    }
+
+
+    .mobile-logout:active {
+        transform: scale(.99);
+    }
+
+
+    /* -----------------------------------------------------
+       PAGE HEADINGS
+    ----------------------------------------------------- */
+
+    .page-heading {
+        width: 100%;
+
+        min-width: 0;
+
+        margin-bottom: 22px;
+    }
+
+
+    .page-heading h1 {
+        font-size: clamp(25px, 7vw, 34px);
+
+        line-height: 1.15;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    .page-heading p {
+        max-width: 100%;
+
+        line-height: 1.6;
+    }
+
+
+    /* -----------------------------------------------------
+       GENERIC PANELS
+    ----------------------------------------------------- */
+
+    .panel,
+    .dashboard-panel,
+    .stat-card {
+        min-width: 0;
+
+        max-width: 100%;
+    }
+
+
+    /* -----------------------------------------------------
+       GRIDS
+    ----------------------------------------------------- */
+
+    .stats-grid,
+    .dashboard-columns,
+    .card-grid {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+
+    /* -----------------------------------------------------
+       TABLE SAFETY
+    ----------------------------------------------------- */
+
+    .panel:has(table) {
+        max-width: 100%;
+
+        overflow-x: auto;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+    table {
+        min-width: 650px;
+    }
+
+
+    /* -----------------------------------------------------
+       FORM SAFETY
+    ----------------------------------------------------- */
+
+    input,
+    textarea,
+    select {
+        max-width: 100%;
+    }
+
+
+    /* -----------------------------------------------------
+       TOUCH TARGETS
+    ----------------------------------------------------- */
+
+    .btn-add,
+    .text-button,
+    .filter-btn {
+        min-height: 42px;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .main {
+        padding:
+            0 12px 25px;
+    }
+
+
+    .topbar {
+        height: 60px;
+    }
+
+
+    .mobile-menu-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+
+    .mobile-brand > span {
+        font-size: 15px;
+
+        letter-spacing: 2.5px;
+    }
+
+
+    .topbar-right {
+        gap: 4px;
+    }
+
+
+    .topbar-actions {
+        gap: 3px;
+    }
+
+
+    .notification-btn,
+    .profile-btn {
+        min-width: 38px;
+        min-height: 38px;
+    }
+
+
+    .page-heading {
+        margin-bottom: 18px;
+    }
+
+
+    .page-heading h1 {
+        font-size: 25px;
+    }
+
+
+    .page-heading p {
+        font-size: 13px;
+    }
+
+
+    .mobile-menu {
+        width:
+            min(290px, 88vw);
+
+        padding:
+            20px 14px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .main {
+        padding:
+            0 10px 22px;
+    }
+
+
+    .mobile-brand {
+        gap: 8px;
+    }
+
+
+    .mobile-brand > span {
+        font-size: 14px;
+
+        letter-spacing: 2px;
+    }
+
+
+    .topbar-right {
+        gap: 2px;
+    }
+
+
+    .notification-btn,
+    .profile-btn {
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+
+    .mobile-menu {
+        width: 88vw;
+    }
+}
