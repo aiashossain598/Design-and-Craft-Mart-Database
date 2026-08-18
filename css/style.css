@@ -10219,3 +10219,114 @@ select {
     }
 
 }
+
+/* =========================================================
+   PHASE 4.1 — DASHBOARD MOBILE OPTIMIZATION
+========================================================= */
+
+@media (max-width: 950px) {
+
+    /* Dashboard wrapper */
+    #dashboard {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow: visible;
+    }
+
+    /* Dashboard heading area */
+    #dashboard .section-header,
+    #dashboard .page-header {
+        width: 100%;
+        min-width: 0;
+    }
+
+    /* Stats grid */
+    #dashboard .stats-grid,
+    #dashboard .stat-grid,
+    #dashboard .dashboard-stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        width: 100%;
+        min-width: 0;
+    }
+
+    /* Individual stat cards */
+    #dashboard .stat-card,
+    #dashboard .stat,
+    #dashboard .dashboard-stat {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 16px;
+    }
+
+    /* Prevent large numbers from breaking layout */
+    #dashboard .stat-value,
+    #dashboard .stat-number,
+    #dashboard .stat-card strong {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Dashboard panels */
+    #dashboard .panel,
+    #dashboard .card {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    /* Tables / wide content */
+    #dashboard .table-wrap,
+    #dashboard .table-container {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Recent orders / lists */
+    #dashboard .list,
+    #dashboard .orders-list,
+    #dashboard .recent-orders {
+        width: 100%;
+        min-width: 0;
+    }
+
+    /* Dashboard buttons */
+    #dashboard button,
+    #dashboard .btn {
+        min-height: 44px;
+    }
+}
+
+
+@media (max-width: 640px) {
+
+    #dashboard .stats-grid,
+    #dashboard .stat-grid,
+    #dashboard .dashboard-stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    #dashboard .stat-card,
+    #dashboard .stat,
+    #dashboard .dashboard-stat {
+        padding: 15px;
+    }
+
+    #dashboard .panel,
+    #dashboard .card {
+        border-radius: 12px;
+    }
+
+    #dashboard {
+        padding-bottom: 20px;
+    }
+}
