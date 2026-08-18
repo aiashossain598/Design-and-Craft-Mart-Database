@@ -9940,3 +9940,282 @@ select {
     }
 
 }
+
+
+/* =========================================================
+   PHASE 3 — MOBILE DASHBOARD
+========================================================= */
+
+@media (max-width: 950px) {
+
+    /* Main content */
+    .main {
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        padding: 0 14px 30px;
+    }
+
+
+    /* Topbar */
+    .topbar {
+        width: 100%;
+        min-width: 0;
+        height: 64px;
+        padding: 0;
+    }
+
+
+    /* Prevent horizontal overflow */
+    .main,
+    .content,
+    .dashboard,
+    .panel,
+    .card,
+    .grid,
+    .stats-grid {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+
+    /* -----------------------------------------------------
+       DASHBOARD GRID
+    ----------------------------------------------------- */
+
+    .stats-grid,
+    .dashboard-grid,
+    .cards-grid,
+    .panel-grid {
+
+        grid-template-columns:
+            1fr !important;
+
+        width: 100%;
+
+        gap: 12px;
+    }
+
+
+    /* -----------------------------------------------------
+       PANELS
+    ----------------------------------------------------- */
+
+    .panel {
+
+        width: 100%;
+
+        padding: 16px;
+
+        border-radius: 12px;
+
+        overflow: hidden;
+    }
+
+
+    .panel h2,
+    .panel h3 {
+
+        font-size: 16px;
+
+        margin-top: 0;
+    }
+
+
+    /* -----------------------------------------------------
+       STAT CARDS
+    ----------------------------------------------------- */
+
+    .stat-card {
+
+        width: 100%;
+
+        min-height: 100px;
+
+        padding: 16px;
+
+        border-radius: 12px;
+    }
+
+
+    .stat-card h3 {
+
+        font-size: 12px;
+    }
+
+
+    .stat-card .value {
+
+        font-size: 25px;
+    }
+
+
+    /* -----------------------------------------------------
+       GENERAL CARDS
+    ----------------------------------------------------- */
+
+    .card {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        box-sizing: border-box;
+
+        overflow: hidden;
+    }
+
+
+    .card-body {
+
+        width: 100%;
+
+        box-sizing: border-box;
+
+        padding: 15px;
+    }
+
+
+    /* -----------------------------------------------------
+       PROFILE / BUSINESS CARD
+    ----------------------------------------------------- */
+
+    .business-card,
+    .profile-card {
+
+        width: 100% !important;
+
+        max-width: 100% !important;
+
+        margin-left: auto;
+
+        margin-right: auto;
+
+        box-sizing: border-box;
+    }
+
+
+    /* Don't let the card create horizontal scrolling */
+    .business-card * ,
+    .profile-card * {
+
+        max-width: 100%;
+    }
+
+
+    /* -----------------------------------------------------
+       BUTTONS
+    ----------------------------------------------------- */
+
+    .panel .actions,
+    .card .actions {
+
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 8px;
+    }
+
+
+    .panel button,
+    .card button {
+
+        max-width: 100%;
+    }
+
+
+    /* -----------------------------------------------------
+       TABLES
+    ----------------------------------------------------- */
+
+    .table-wrap {
+
+        width: 100%;
+
+        overflow-x: auto;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+    table {
+
+        min-width: 600px;
+    }
+
+
+    /* -----------------------------------------------------
+       LONG TEXT
+    ----------------------------------------------------- */
+
+    .panel,
+    .card {
+
+        overflow-wrap: anywhere;
+
+        word-break: break-word;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .main {
+
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 24px;
+    }
+
+
+    .topbar {
+
+        height: 60px;
+    }
+
+
+    .mobile-menu-btn {
+
+        width: 40px;
+        height: 40px;
+    }
+
+
+    .panel {
+
+        padding: 13px;
+
+        border-radius: 11px;
+    }
+
+
+    .stat-card {
+
+        padding: 14px;
+    }
+
+
+    .card-body {
+
+        padding: 13px;
+    }
+
+
+    .stat-card .value {
+
+        font-size: 22px;
+    }
+
+
+    .panel h3 {
+
+        font-size: 15px;
+    }
+
+}
