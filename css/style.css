@@ -9768,3 +9768,175 @@ select {
         width: 88vw;
     }
 }
+
+/* =========================================================
+   PHASE 2 — MOBILE NAVIGATION
+========================================================= */
+
+@media (max-width: 950px) {
+
+    /* -----------------------------------------------------
+       MOBILE MENU NAV ITEMS
+    ----------------------------------------------------- */
+
+    .mobile-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+
+    .mobile-nav .nav-item {
+
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+
+        min-height: 48px;
+
+        margin: 0;
+        padding: 13px 15px;
+
+        border: 1px solid transparent;
+        border-radius: 10px;
+
+        background: transparent;
+
+        color: #aaa;
+
+        font-family: inherit;
+        font-size: 14px;
+
+        text-align: left;
+
+        cursor: pointer;
+
+        transition:
+            background .2s ease,
+            color .2s ease,
+            border-color .2s ease,
+            transform .2s ease;
+    }
+
+
+    .mobile-nav .nav-item:hover {
+
+        background: rgba(211,166,83,.07);
+
+        color: var(--gold-light);
+
+        border-color:
+            rgba(211,166,83,.12);
+    }
+
+
+    .mobile-nav .nav-item.active {
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(211,166,83,.16),
+                rgba(211,166,83,.06)
+            );
+
+        border-color:
+            rgba(211,166,83,.25);
+
+        color:
+            var(--gold-light);
+
+        box-shadow:
+            inset 3px 0 0 var(--gold);
+    }
+
+
+    .mobile-nav .nav-item:active {
+
+        transform: scale(.98);
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE MENU SCROLL
+    ----------------------------------------------------- */
+
+    .mobile-menu {
+
+        overflow-y: auto;
+
+        overscroll-behavior: contain;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+    /* -----------------------------------------------------
+       PREVENT BACKGROUND SCROLL
+    ----------------------------------------------------- */
+
+    body.mobile-menu-open {
+
+        overflow: hidden;
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE MENU BUTTON
+    ----------------------------------------------------- */
+
+    .mobile-menu-btn {
+
+        cursor: pointer;
+
+        flex-shrink: 0;
+
+        transition:
+            background .2s ease,
+            border-color .2s ease,
+            transform .2s ease;
+    }
+
+
+    .mobile-menu-btn:active {
+
+        transform: scale(.94);
+    }
+
+
+    /* -----------------------------------------------------
+       CLOSE BUTTON
+    ----------------------------------------------------- */
+
+    .mobile-menu-close {
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        cursor: pointer;
+
+        flex-shrink: 0;
+
+        transition:
+            background .2s ease,
+            color .2s ease,
+            transform .2s ease;
+    }
+
+
+    .mobile-menu-close:hover {
+
+        background: rgba(255,255,255,.05);
+
+        color: #fff;
+    }
+
+
+    .mobile-menu-close:active {
+
+        transform: scale(.92);
+    }
+
+}

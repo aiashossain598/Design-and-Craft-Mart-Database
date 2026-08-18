@@ -7276,3 +7276,251 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 })();
+
+
+/* =========================================================
+   PHASE 2 — MOBILE NAVIGATION
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const menuButton =
+        document.querySelector(".mobile-menu-btn");
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const mobileOverlay =
+        document.getElementById("mobileMenuOverlay");
+
+    const mobileClose =
+        document.getElementById("mobileMenuClose");
+
+
+    /* -----------------------------------------------------
+       OPEN MENU
+    ----------------------------------------------------- */
+
+    function openMobileMenu() {
+
+        if (!mobileMenu) return;
+
+        document.body.classList.add(
+            "mobile-menu-open"
+        );
+
+        menuButton?.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+    }
+
+
+    /* -----------------------------------------------------
+       CLOSE MENU
+    ----------------------------------------------------- */
+
+    function closeMobileMenu() {
+
+        document.body.classList.remove(
+            "mobile-menu-open"
+        );
+
+        menuButton?.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+    }
+
+
+    /* -----------------------------------------------------
+       MENU BUTTON
+    ----------------------------------------------------- */
+
+    menuButton?.addEventListener(
+        "click",
+        openMobileMenu
+    );
+
+
+    /* -----------------------------------------------------
+       CLOSE BUTTON
+    ----------------------------------------------------- */
+
+    mobileClose?.addEventListener(
+        "click",
+        closeMobileMenu
+    );
+
+
+    /* -----------------------------------------------------
+       OVERLAY
+    ----------------------------------------------------- */
+
+    mobileOverlay?.addEventListener(
+        "click",
+        closeMobileMenu
+    );
+
+
+    /* -----------------------------------------------------
+       ESC KEY
+    ----------------------------------------------------- */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (event.key === "Escape") {
+
+                closeMobileMenu();
+
+            }
+
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       MOBILE NAVIGATION
+    ----------------------------------------------------- */
+
+    document
+        .querySelectorAll(
+            ".mobile-nav .nav-item"
+        )
+        .forEach((item) => {
+
+            item.addEventListener(
+                "click",
+                () => {
+
+                    const section =
+                        item.dataset.section;
+
+
+                    if (!section) return;
+
+
+                    /* -----------------------------
+                       UPDATE ACTIVE STATE
+                    ----------------------------- */
+
+                    document
+                        .querySelectorAll(
+                            ".mobile-nav .nav-item"
+                        )
+                        .forEach((navItem) => {
+
+                            navItem.classList.remove(
+                                "active"
+                            );
+
+                        });
+
+
+                    item.classList.add(
+                        "active"
+                    );
+
+
+                    /* -----------------------------
+                       USE EXISTING APP NAVIGATION
+                    ----------------------------- */
+
+                    const desktopNav =
+                        document.querySelector(
+                            `.sidebar .nav-item[data-section="${section}"]`
+                        );
+
+
+                    if (desktopNav) {
+
+                        desktopNav.click();
+
+                    } else {
+
+                        /*
+                         * Fallback:
+                         * Find section directly.
+                         */
+
+                        const target =
+                            document.getElementById(
+                                section
+                            );
+
+
+                        if (target) {
+
+                            document
+                                .querySelectorAll(
+                                    ".section, .page-section, [data-page-section]"
+                                )
+                                .forEach((page) => {
+
+                                    page.style.display =
+                                        "none";
+
+                                });
+
+
+                            target.style.display =
+                                "block";
+
+                        }
+
+                    }
+
+
+                    /* -----------------------------
+                       CLOSE MENU
+                    ----------------------------- */
+
+                    closeMobileMenu();
+
+                }
+            );
+
+        });
+
+
+    /* -----------------------------------------------------
+       LOGOUT
+    ----------------------------------------------------- */
+
+    document
+        .getElementById("mobileLogout")
+        ?.addEventListener(
+            "click",
+            async () => {
+
+                try {
+
+                    if (
+                        typeof supabaseClient !==
+                        "undefined"
+                    ) {
+
+                        await supabaseClient
+                            .auth
+                            .signOut();
+
+                    }
+
+                } catch (error) {
+
+                    console.error(
+                        "Mobile logout error:",
+                        error
+                    );
+
+                }
+
+                window.location.href =
+                    "index.html";
+
+            }
+        );
+
+});
