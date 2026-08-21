@@ -3808,11 +3808,11 @@ async function loadDashboard() {
 
 
     if (profilePosition) {
-
         profilePosition.textContent =
+            currentProfile.position ||
+            currentProfile.job_title ||
             currentProfile.role ||
             "Partner";
-
     }
 
 
