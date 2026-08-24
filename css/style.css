@@ -10056,3 +10056,160 @@ select {
         padding-bottom: 20px;
     }
 }
+
+
+/* =========================================================
+   ORDERS — MOBILE OPTIMIZATION
+========================================================= */
+
+@media (max-width: 680px) {
+
+    /* Orders page spacing */
+    #tab-orders {
+        width: 100%;
+        min-width: 0;
+    }
+
+    #tab-orders .page-heading {
+        margin-bottom: 18px;
+    }
+
+    #tab-orders .page-heading h1 {
+        font-size: 28px;
+        line-height: 1.2;
+    }
+
+    #tab-orders .page-heading p {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+
+    /* Order header */
+    #tab-orders .order-page-header {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+
+        padding: 18px;
+        margin-bottom: 18px;
+    }
+
+    #tab-orders .order-page-header h3 {
+        margin: 5px 0 7px;
+        font-size: 18px;
+    }
+
+    #tab-orders .order-page-header p {
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.6;
+        color: var(--text-dim);
+    }
+
+    #tab-orders .order-page-header .btn-add {
+        width: 100%;
+        min-height: 44px;
+    }
+
+
+    /* Table container */
+    #tab-orders > .panel:last-child {
+        width: 100%;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+
+        border-radius: 12px;
+    }
+
+
+    /* Orders table */
+    #tab-orders table {
+        width: 100%;
+        min-width: 620px;
+
+        border-collapse: collapse;
+    }
+
+
+    #tab-orders th,
+    #tab-orders td {
+        padding: 13px 12px;
+        font-size: 12px;
+        white-space: normal;
+    }
+
+
+    #tab-orders th {
+        font-size: 10px;
+        letter-spacing: .7px;
+    }
+
+
+    /* Keep customer information readable */
+    #tab-orders td:first-child {
+        min-width: 130px;
+    }
+
+
+    #tab-orders td:nth-child(2) {
+        min-width: 150px;
+    }
+
+
+    #tab-orders td:nth-child(3) {
+        min-width: 80px;
+    }
+
+
+    #tab-orders td:nth-child(4) {
+        min-width: 110px;
+    }
+
+
+    #tab-orders td:nth-child(5) {
+        min-width: 110px;
+    }
+
+
+    /* Empty/loading state */
+    #tab-orders .empty-state {
+        min-height: 100px;
+        padding: 30px 15px;
+        text-align: center;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 390px) {
+
+    #tab-orders .page-heading h1 {
+        font-size: 25px;
+    }
+
+    #tab-orders .order-page-header {
+        padding: 16px;
+    }
+
+    #tab-orders .order-page-header h3 {
+        font-size: 17px;
+    }
+
+    #tab-orders .order-page-header .btn-add {
+        min-height: 42px;
+        font-size: 13px;
+    }
+
+    #tab-orders th,
+    #tab-orders td {
+        padding: 11px 10px;
+        font-size: 11px;
+    }
+
+}
