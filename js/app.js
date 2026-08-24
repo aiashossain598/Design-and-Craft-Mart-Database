@@ -273,8 +273,7 @@ function updateUserInterface() {
 
     if (whoAmI) {
 
-        whoAmI.textContent =
-            `${fullName} (${currentProfile.role || "partner"})`;
+        whoAmI.textContent = fullName;
 
     }
 
@@ -285,8 +284,7 @@ function updateUserInterface() {
     if (userRole) {
 
         userRole.textContent =
-            currentProfile.role ||
-            "Partner";
+    (currentProfile.role || "Partner").toUpperCase();
 
     }
 
