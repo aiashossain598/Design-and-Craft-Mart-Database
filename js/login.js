@@ -177,6 +177,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             console.log("Login successful:", data.user.email);
 
+            await window.recordLoginHistory({
+                user: data.user,
+                email: data.user.email,
+                session: data.session || null
+            });
 
             // ------------------------------------------------
             // Redirect
