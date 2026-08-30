@@ -87,7 +87,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     email: email,
                     password: password
                 });
-
+            await supabase.from('login_history').insert({
+    user_id: data.user.id,
+    email: data.user.email || '',
+    user_agent: navigator.userAgent
+});
 
             if (error) {
                 throw error;
@@ -98,7 +102,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error("Login failed. User information was not returned.");
             }
 
-
+            if (!error && data?.user) {
+    await supabase.from('login_history').insert({
+        user_id: data.user.id,
+        email: data.user.email || '',
+        user_agent: navigator.userAgent
+    });
+}
             // ------------------------------------------------
             // Check profile
             // ------------------------------------------------
