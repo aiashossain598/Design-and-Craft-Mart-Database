@@ -135,7 +135,6 @@ let currentContentFilter = "all";
 
         updateUserInterface();
         renderBusinessCard(currentProfile);
-        await loadCurrentUserLoginHistory();
 
         // ----------------------------------------------------
         // Setup user information
@@ -185,7 +184,6 @@ let currentContentFilter = "all";
             await loadJoinRequests();
 
             await loadPendingContent();
-            await loadAdminLoginHistory();
 
         }
 
@@ -1229,13 +1227,6 @@ function openProfilePage() {
 async function triggerLogout() {
 
     try {
-
-        if (currentUser) {
-            await window.recordLogoutHistory({
-                user: currentUser,
-                email: currentUser.email
-            });
-        }
 
         if (supabaseClient?.auth) {
             await supabaseClient.auth.signOut();
@@ -4623,176 +4614,6 @@ function esc(value) {
 
     return div.innerHTML;
 
-}
-
-function formatLoginHistoryDate(value) {
-    if (!value) {
-        return "—";
-    }
-
-    try {
-        return new Date(value).toLocaleString("en-GB");
-    } catch (error) {
-        return "—";
-    }
-}
-
-function renderLoginHistoryRows(rows, listElement) {
-    if (!listElement) {
-        return;
-    }
-
-    if (!rows || !rows.length) {
-        listElement.innerHTML = `
-            <div class="empty-state">
-                No login history available.
-            </div>
-        `;
-        return;
-    }
-
-    listElement.innerHTML = rows
-        .map((row) => {
-            const eventLabel = row.event_type === "login"
-                ? "Login"
-                : row.event_type === "logout"
-                    ? "Logout"
-                    : row.event_type === "login_failed"
-                        ? "Failed Login"
-                        : row.event_type;
-
-            const statusLabel = row.success === false ? "Failed" : "Successful";
-            const device = row.user_agent || "Unknown browser";
-            const loginDate = formatLoginHistoryDate(row.login_at);
-            const logoutDate = formatLoginHistoryDate(row.logout_at);
-
-            return `
-                <div class="join-request-card">
-                    <div class="join-request-info">
-                        <h4 class="join-request-name">${esc(eventLabel)}</h4>
-                        <div class="join-request-detail">
-                            <span>📧 ${esc(row.email || "Unknown email")}</span>
-                            <span>🕒 ${esc(loginDate)}</span>
-                            <span>⏱️ ${row.event_type === "logout" ? "Logout: " + esc(logoutDate) : "Status: " + esc(statusLabel)}</span>
-                            <span>🖥️ ${esc(device)}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        })
-        .join("");
-}
-
-async function loadCurrentUserLoginHistory() {
-    const list = document.getElementById("profileLoginHistoryList");
-
-    if (!list || !currentUser) {
-        return;
-    }
-
-    const { data, error } = await supabaseClient
-        .from("login_history")
-        .select("*")
-        .eq("user_id", currentUser.id)
-        .order("login_at", { ascending: false })
-        .limit(20);
-
-    if (error) {
-        console.error("Profile login history error:", error);
-        list.innerHTML = `
-            <div class="empty-state">
-                Unable to load login history.
-            </div>
-        `;
-        return;
-    }
-
-    renderLoginHistoryRows(data || [], list);
-}
-
-async function loadAdminLoginHistory() {
-    const list = document.getElementById("adminLoginHistoryList");
-
-    if (!list || currentProfile?.role !== "admin") {
-        return;
-    }
-
-    const { data, error } = await supabaseClient
-        .from("login_history")
-        .select("*")
-        .order("login_at", { ascending: false })
-        .limit(100);
-
-    if (error) {
-        console.error("Admin login history error:", error);
-        list.innerHTML = `
-            <div class="empty-state">
-                Unable to load login history.
-            </div>
-        `;
-        return;
-    }
-
-    if (!data || !data.length) {
-        list.innerHTML = `
-            <div class="empty-state">
-                No login history yet.
-            </div>
-        `;
-        return;
-    }
-
-    const ids = [...new Set((data || []).filter((row) => row.user_id).map((row) => row.user_id))];
-    const profileMap = {};
-
-    if (ids.length) {
-        const { data: profiles, error: profileError } = await supabaseClient
-            .from("user_profiles")
-            .select("id, full_name")
-            .in("id", ids);
-
-        if (!profileError && profiles) {
-            profiles.forEach((profile) => {
-                profileMap[profile.id] = profile.full_name || "Unknown user";
-            });
-        }
-    }
-
-    list.innerHTML = (data || [])
-        .map((row) => {
-            const eventLabel = row.event_type === "login"
-                ? "Login"
-                : row.event_type === "logout"
-                    ? "Logout"
-                    : row.event_type === "login_failed"
-                        ? "Failed Login"
-                        : row.event_type;
-
-            const displayName = profileMap[row.user_id] || row.email || "Unknown user";
-            const loginDate = formatLoginHistoryDate(row.login_at);
-            const logoutDate = formatLoginHistoryDate(row.logout_at);
-            const status = row.success === false ? "Failed" : "Successful";
-            const userAgent = row.user_agent || "Unknown browser";
-            const ipAddress = row.ip_address || "—";
-
-            return `
-                <div class="join-request-card">
-                    <div class="join-request-info">
-                        <h4 class="join-request-name">${esc(displayName)}</h4>
-                        <div class="join-request-detail">
-                            <span>📧 ${esc(row.email || "Unknown email")}</span>
-                            <span>⚡ ${esc(eventLabel)}</span>
-                            <span>🕒 Login: ${esc(loginDate)}</span>
-                            <span>⏱️ Logout: ${esc(logoutDate)}</span>
-                            <span>✅ ${esc(status)}</span>
-                            <span>🖥️ ${esc(userAgent)}</span>
-                            <span>🌐 IP: ${esc(ipAddress)}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        })
-        .join("");
 }
 
 // ============================================================
