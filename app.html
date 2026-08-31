@@ -162,7 +162,13 @@
       <div class="sidebar-footer">
 
 
-        <div class="sidebar-user">
+        <button
+          type="button"
+          class="sidebar-user"
+          id="sidebarUserMenuToggle"
+          aria-expanded="false"
+          aria-haspopup="menu"
+        >
 
           <div
             class="user-avatar"
@@ -183,6 +189,24 @@
             </span>
 
           </div>
+
+        </button>
+
+        <div
+          class="sidebar-user-menu"
+          id="sidebarUserMenu"
+          hidden
+          role="menu"
+        >
+          <button
+            type="button"
+            class="sidebar-user-action"
+            id="sidebarLogoutBtn"
+            role="menuitem"
+          >
+            Log out
+          </button>
+        </div>
 
 
     </aside>
@@ -424,18 +448,12 @@
 
         <div class="topbar-right">
 
-
-          <div class="topbar-actions">
-
-
-
-    <!-- Profile -->
-    <button class="profile-btn" aria-label="Account menu">▾</button>
-
-</div>
-
-
-          <div class="topbar-profile">
+          <button
+            type="button"
+            class="topbar-profile"
+            id="topbarProfileBtn"
+            aria-label="Open profile"
+          >
 
             <div
               class="user-avatar small"
@@ -444,8 +462,7 @@
               A
             </div>
 
-          </div>
-
+          </button>
 
         </div>
 

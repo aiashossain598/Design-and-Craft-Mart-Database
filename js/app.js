@@ -1205,45 +1205,173 @@ profileEditForm?.addEventListener(
 );
 
 // ============================================================
-// LOGOUT
+// PROFILE + LOGOUT
 // ============================================================
+
+function openProfilePage() {
+
+    const profileNavItem =
+        document.querySelector(
+            ".sidebar .nav-item[data-tab='profile']"
+        );
+
+    if (profileNavItem) {
+        profileNavItem.click();
+        return;
+    }
+
+    if (typeof showTab === "function") {
+        showTab("profile");
+    }
+
+}
+
+async function triggerLogout() {
+
+    try {
+
+        if (currentUser) {
+            await window.recordLogoutHistory({
+                user: currentUser,
+                email: currentUser.email
+            });
+        }
+
+        if (supabaseClient?.auth) {
+            await supabaseClient.auth.signOut();
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    }
+
+    finally {
+
+        window.location.href =
+            "index.html";
+
+    }
+
+}
+
+function setSidebarUserMenuState(isOpen) {
+
+    const menu =
+        document.getElementById("sidebarUserMenu");
+
+    const toggle =
+        document.getElementById("sidebarUserMenuToggle");
+
+    if (!menu || !toggle) {
+        return;
+    }
+
+    menu.hidden = !isOpen;
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    menu.classList.toggle("is-open", isOpen);
+
+}
+
+const topbarProfileButton =
+    document.getElementById("topbarProfileBtn");
+
+if (topbarProfileButton) {
+    topbarProfileButton.addEventListener(
+        "click",
+        openProfilePage
+    );
+}
+
+const sidebarUserMenuToggle =
+    document.getElementById("sidebarUserMenuToggle");
+
+if (sidebarUserMenuToggle) {
+    sidebarUserMenuToggle.addEventListener(
+        "click",
+        (event) => {
+            event.stopPropagation();
+
+            const menu =
+                document.getElementById("sidebarUserMenu");
+
+            if (!menu) {
+                return;
+            }
+
+            setSidebarUserMenuState(
+                menu.hidden
+            );
+        }
+    );
+
+    sidebarUserMenuToggle.addEventListener(
+        "keydown",
+        (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                sidebarUserMenuToggle.click();
+            }
+        }
+    );
+}
+
+const sidebarLogoutButton =
+    document.getElementById("sidebarLogoutBtn");
+
+if (sidebarLogoutButton) {
+    sidebarLogoutButton.addEventListener(
+        "click",
+        (event) => {
+            event.stopPropagation();
+            setSidebarUserMenuState(false);
+            triggerLogout();
+        }
+    );
+}
+
+document.addEventListener(
+    "click",
+    (event) => {
+        const toggle =
+            document.getElementById("sidebarUserMenuToggle");
+
+        const menu =
+            document.getElementById("sidebarUserMenu");
+
+        if (!toggle || !menu) {
+            return;
+        }
+
+        if (
+            !toggle.contains(event.target) &&
+            !menu.contains(event.target)
+        ) {
+            setSidebarUserMenuState(false);
+        }
+    }
+);
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+        if (event.key === "Escape") {
+            setSidebarUserMenuState(false);
+        }
+    }
+);
 
 document
     .getElementById("logoutBtn")
     ?.addEventListener(
         "click",
-        async () => {
-
-            try {
-
-                if (currentUser) {
-                    await window.recordLogoutHistory({
-                        user: currentUser,
-                        email: currentUser.email
-                    });
-                }
-
-                await supabaseClient.auth.signOut();
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Logout error:",
-                    error
-                );
-
-            }
-
-            finally {
-
-                window.location.href =
-                    "index.html";
-
-            }
-
-        }
+        triggerLogout
     );
 
 
