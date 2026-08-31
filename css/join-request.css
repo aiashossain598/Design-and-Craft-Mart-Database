@@ -534,3 +534,14 @@ body {
             1;
     }
 }
+
+@media (max-width: 768px) {
+    .join-form-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .join-form-submit {
+        grid-column: auto;
+    }
+}

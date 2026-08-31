@@ -1,582 +1,1001 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Team — Join Request</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="icon" type="image/png" href="assets/logo.png">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase-config.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    document.body.classList.add("page-ready");
+    <title>Team — Join Request</title>
 
-    const form = document.getElementById("joinForm");
-    const submitBtn = document.getElementById("submitBtn");
-    const msgBox = document.getElementById("msgBox");
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="assets/logo.png">
 
-    if (!form) {
-        console.error("joinForm not found");
-        return;
-    }
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
 
-    function showMessage(message, type = "error") {
+    <style>
+        /* =========================================================
+           JOIN REQUEST PAGE
+        ========================================================= */
 
-        if (!msgBox) {
-            alert(message);
-            return;
-        }
+        .join-page {
+            min-height: 100vh;
+            min-height: 100svh;
 
-        msgBox.style.display = "block";
-        msgBox.textContent = message;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-        if (type === "success") {
-            msgBox.style.background = "rgba(80,180,120,.10)";
-            msgBox.style.border = "1px solid rgba(80,180,120,.30)";
-            msgBox.style.color = "#8de0aa";
-        } else {
-            msgBox.style.background = "rgba(226,96,79,.10)";
-            msgBox.style.border = "1px solid rgba(226,96,79,.30)";
-            msgBox.style.color = "#ff9b8d";
-        }
-    }
+            padding: 40px 20px;
+            box-sizing: border-box;
 
-
-    form.addEventListener("submit", async (event) => {
-
-        // VERY IMPORTANT:
-        // Prevent browser from refreshing the page.
-        event.preventDefault();
-
-        console.log("Join request form submitted");
-
-
-        const fullName =
-            document.getElementById("fullName")?.value.trim();
-
-        const mobile =
-            document.getElementById("mobile")?.value.trim();
-
-        const address =
-            document.getElementById("address")?.value.trim();
-
-        const fbProfile =
-            document.getElementById("fbProfile")?.value.trim();
-
-        const email =
-            document.getElementById("email")?.value.trim();
-
-        const password =
-            document.getElementById("password")?.value;
-
-
-        if (!fullName || !mobile || !address || !email || !password) {
-
-            showMessage(
-                "Please fill in all required fields."
-            );
-
-            return;
-        }
-
-
-        if (!supabaseClient) {
-
-            console.error(
-                "supabaseClient is not available"
-            );
-
-            showMessage(
-                "Database connection is not available."
-            );
-
-            return;
-        }
-
-
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Sending...";
-
-
-        try {
-
-            /*
-             * STEP 1
-             * Create the authentication account.
-             */
-
-           const {
-    data: authData,
-    error: authError
-} = await supabaseClient.auth.signUp({
-
-    email: email,
-
-    password: password,
-
-    options: {
-        data: {
-            full_name: fullName,
-            mobile: mobile,
-            address: address,
-            fb_profile: fbProfile || ""
-        }
-    }
-
-});
-
-
-            if (authError) {
-
-                console.error(
-                    "Auth signup error:",
-                    authError
+            background:
+                radial-gradient(
+                    circle at 15% 15%,
+                    rgba(211, 166, 83, 0.12),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 85%,
+                    rgba(211, 166, 83, 0.08),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #070707,
+                    #11110f,
+                    #080808
                 );
 
-                throw authError;
-            }
+            color: #f1eee7;
+        }
 
 
-            const user =
-                authData?.user;
+        /* =========================================================
+           CARD
+        ========================================================= */
 
+        .join-card {
+            width: min(720px, 100%);
 
-            if (!user) {
+            padding: 38px;
 
-                throw new Error(
-                    "Account could not be created."
+            box-sizing: border-box;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(23, 23, 23, 0.98),
+                    rgba(9, 9, 9, 0.98)
                 );
 
+            border: 1px solid rgba(211, 166, 83, 0.30);
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.55),
+                inset 0 1px rgba(255, 255, 255, 0.03);
+
+            animation: joinCardIn 0.55s ease-out both;
+        }
+
+
+        /* FIXED ANIMATION BLOCK */
+        @keyframes joinCardIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
             }
 
-
-            /*
-             * SUCCESS
-             */
-
-            showMessage(
-                "Your join request has been sent successfully. Please wait for admin approval.",
-                "success"
-            );
-
-
-            form.reset();
-
-
-            submitBtn.textContent =
-                "Request Sent";
-
-        } catch (error) {
-
-            console.error(
-                "Join request failed:",
-                error
-            );
-
-
-            showMessage(
-                error?.message ||
-                "Could not send join request."
-            );
-
-
-            submitBtn.disabled = false;
-
-            submitBtn.textContent =
-                "Request Sent";
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-    });
 
-});
-</script>
+        /* =========================================================
+           BRAND
+        ========================================================= */
 
-<style>
-.join-page {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    background:
-        radial-gradient(circle at 15% 15%, rgba(211,166,83,.12), transparent 30%),
-        radial-gradient(circle at 85% 85%, rgba(211,166,83,.08), transparent 30%),
-        linear-gradient(135deg, #070707, #11110f, #080808);
-}
-
-.join-card {
-    width: min(720px, 100%);
-    padding: 38px;
-    background: linear-gradient(145deg, #171717, #090909);
-    border: 1px solid rgba(211,166,83,.30);
-    border-radius: 18px;
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.55),
-        inset 0 1px rgba(255,255,255,.03);
-        animation: joinCardIn 0.55s ease-out both;
-    }
-
-    @keyframes joinCardIn {
-        from {
-            opacity: 0;
-            transform: translateY(12px);
+        .join-brand {
+            text-align: center;
+            margin-bottom: 18px;
         }
-        to {
-            opacity: 1;
+
+
+        .join-logo {
+            height: 75px;
+            width: auto;
+
+            max-width: 180px;
+
+            object-fit: contain;
+
+            display: block;
+
+            margin: 0 auto 12px;
+        }
+
+
+        .join-brand h1 {
+            margin: 0;
+
+            color: var(--gold-light, #e4bf78);
+
+            font-family: Georgia, "Times New Roman", serif;
+
+            font-size: 27px;
+
+            letter-spacing: 3px;
+        }
+
+
+        .join-brand p {
+            margin: 8px 0 0;
+
+            color: #777;
+
+            font-size: 10px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================================
+           INTRO
+        ========================================================= */
+
+        .join-intro {
+            text-align: center;
+
+            color: #929292;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            margin: 0 auto 28px;
+
+            max-width: 600px;
+        }
+
+
+        /* =========================================================
+           MESSAGE
+        ========================================================= */
+
+        .join-message {
+            display: none;
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 12px 14px;
+
+            margin-bottom: 20px;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
+        .join-form {
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 24px;
+
+            margin: 0 auto;
+
+            box-sizing: border-box;
+        }
+
+
+        .join-field {
+            width: 100%;
+
+            min-width: 0;
+        }
+
+
+        .join-field.full {
+            grid-column: 1 / -1;
+        }
+
+
+        .join-field label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #d0d0d0;
+
+            font-size: 13px;
+
+            font-weight: 500;
+        }
+
+
+        /* =========================================================
+           INPUTS
+        ========================================================= */
+
+        .join-field input,
+        .join-field textarea,
+        .join-field select {
+            width: 100%;
+
+            max-width: 100%;
+
+            min-width: 0;
+
+            box-sizing: border-box;
+
+            border: 1px solid #353535;
+
+            border-radius: 9px;
+
+            background: #0c0c0c;
+
+            color: #f1eee7;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .join-field input,
+        .join-field select {
+            height: 48px;
+
+            padding: 0 14px;
+        }
+
+
+        .join-field textarea {
+            min-height: 110px;
+
+            padding: 13px 14px;
+
+            resize: vertical;
+        }
+
+
+        .join-field input::placeholder,
+        .join-field textarea::placeholder {
+            color: #555;
+        }
+
+
+        .join-field input:focus,
+        .join-field textarea:focus,
+        .join-field select:focus {
+            border-color: rgba(211, 166, 83, 0.85);
+
+            box-shadow:
+                0 0 0 3px rgba(211, 166, 83, 0.09);
+
+            background: #0f0f0f;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================================
+           DIVIDER
+        ========================================================= */
+
+        .join-divider {
+            grid-column: 1 / -1;
+
+            width: 100%;
+
+            border: 0;
+
+            border-top:
+                1px solid rgba(211, 166, 83, 0.18);
+
+            margin: 4px 0;
+        }
+
+
+        /* =========================================================
+           SECTION TITLE
+        ========================================================= */
+
+        .join-section-title {
+            grid-column: 1 / -1;
+
+            color: var(--gold-light, #e4bf78);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 15px;
+
+            letter-spacing: 1.5px;
+
+            margin-top: 2px;
+        }
+
+
+        /* =========================================================
+           SUBMIT BUTTON
+        ========================================================= */
+
+        .join-submit {
+            grid-column: 1 / -1;
+
+            width: 100%;
+
+            height: 50px;
+
+            border: 0;
+
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e4bf78,
+                    #b98835
+                );
+
+            color: #17120a;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+
+        .join-submit:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 30px
+                rgba(211, 166, 83, 0.18);
+        }
+
+
+        .join-submit:active {
             transform: translateY(0);
         }
-    height: 75px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto 12px;
-}
 
-.join-brand h1 {
-    margin: 0;
-    color: var(--gold-light);
-    font-family: Georgia, serif;
-    font-size: 27px;
-    letter-spacing: 3px;
-}
 
-.join-brand p {
-    margin: 8px 0 0;
-    color: #777;
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-}
+        .join-submit:disabled {
+            opacity: 0.65;
 
-.join-intro {
-    text-align: center;
-    color: #929292;
-    font-size: 14px;
-    line-height: 1.7;
-    margin: 0 auto 28px;
-    max-width: 600px;
-}
+            cursor: not-allowed;
 
-.join-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-}
+            transform: none;
 
-.join-field {
-    width: 100%;
-}
+            box-shadow: none;
+        }
 
-.join-field.full {
-    grid-column: 1 / -1;
-}
 
-.join-field label {
-    display: block;
-    margin-bottom: 8px;
-    color: #d0d0d0;
-    font-size: 13px;
-}
+        /* =========================================================
+           LOGIN LINK
+        ========================================================= */
 
-.join-field input {
-    width: 100%;
-    height: 48px;
-    padding: 0 14px;
-    border: 1px solid #353535;
-    border-radius: 9px;
-    background: #0c0c0c;
-    color: #f1eee7;
-    font-size: 14px;
-    outline: none;
-}
+        .join-login {
+            margin-top: 22px;
 
-.join-field input::placeholder {
-    color: #555;
-}
+            padding-top: 20px;
 
-.join-field input:focus {
-        border-color: rgba(211,166,83,.85);
-        box-shadow: 0 0 0 3px rgba(211,166,83,.09);
-        background: rgba(15,15,15,1);
-        transform: translateY(-1px);
-    }
+            border-top:
+                1px solid rgba(211, 166, 83, 0.12);
 
-    .join-field input,
-    .join-field textarea,
-    .join-field select {
-        transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, transform 0.2s ease;
-    }
+            text-align: center;
 
-    .join-submit:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 14px 30px rgba(211,166,83,.18);
-    }
+            color: #777;
 
-    .join-submit:active {
-        transform: translateY(0);
+            font-size: 13px;
+        }
 
-.join-divider {
-    grid-column: 1 / -1;
-    width: 100%;
-    border: 0;
-    border-top: 1px solid rgba(211,166,83,.18);
-    margin: 4px 0;
-}
 
-.join-section-title {
-    grid-column: 1 / -1;
-    color: var(--gold-light);
-    font-family: Georgia, serif;
-    font-size: 15px;
-    letter-spacing: 1.5px;
-}
+        .join-login a {
+            color: var(--gold-light, #e4bf78);
 
-.join-submit {
-    grid-column: 1 / -1;
-    width: 100%;
-    height: 50px;
-    border: 0;
-    border-radius: 9px;
-    background: linear-gradient(135deg, #e4bf78, #b98835);
-    color: #17120a;
-    font-size: 14px;
-    font-weight: 600;
-}
+            text-decoration: none;
 
-.join-submit:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 12px 28px rgba(193,145,58,.18);
-}
+            font-weight: 600;
 
-.join-message {
-    display: none;
-    grid-column: 1 / -1;
-    padding: 12px 14px;
-    border-radius: 9px;
-    font-size: 13px;
-}
+            transition: color 0.2s ease;
+        }
 
-.join-login {
-    margin-top: 22px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(211,166,83,.12);
-    text-align: center;
-    color: #777;
-    font-size: 13px;
-}
 
-.join-login a {
-    color: var(--gold-light);
-    text-decoration: none;
-    font-weight: 600;
-}
+        .join-login a:hover {
+            color: #f0d08c;
 
-/* MOBILE */
-@media (max-width: 640px) {
+            text-decoration: underline;
+        }
 
-    .join-page {
-        padding: 20px 12px;
-        align-items: flex-start;
-    }
 
-    .join-card {
-        padding: 25px 18px;
-        border-radius: 14px;
-    }
+        /* =========================================================
+           MOBILE
+        ========================================================= */
 
-    .join-form {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
+        @media (max-width: 640px) {
 
-    .join-field.full,
-    .join-divider,
-    .join-section-title,
-    .join-submit,
-    .join-message {
-        grid-column: 1;
-    }
+            .join-page {
+                min-height: 100svh;
 
-    .join-brand h1 {
-        font-size: 21px;
-    }
+                padding: 20px 12px;
 
-    .join-intro {
-        font-size: 13px;
-    }
-}
-</style>
+                align-items: flex-start;
+            }
 
+
+            .join-card {
+                width: 100%;
+
+                padding: 25px 18px;
+
+                border-radius: 14px;
+            }
+
+
+            .join-form {
+                grid-template-columns: 1fr;
+
+                gap: 17px;
+            }
+
+
+            .join-field.full,
+            .join-divider,
+            .join-section-title,
+            .join-submit {
+                grid-column: 1;
+            }
+
+
+            .join-logo {
+                height: 65px;
+            }
+
+
+            .join-brand h1 {
+                font-size: 21px;
+
+                letter-spacing: 2.5px;
+            }
+
+
+            .join-brand p {
+                font-size: 9px;
+
+                letter-spacing: 2.5px;
+            }
+
+
+            .join-intro {
+                font-size: 13px;
+
+                margin-bottom: 24px;
+            }
+
+
+            .join-field input,
+            .join-field select {
+                height: 47px;
+            }
+        }
+
+
+        /* =========================================================
+           SMALL MOBILE
+        ========================================================= */
+
+        @media (max-width: 400px) {
+
+            .join-card {
+                padding: 22px 15px;
+            }
+
+
+            .join-brand h1 {
+                font-size: 19px;
+            }
+
+
+            .join-intro {
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
+
+
 <body class="join-page">
 
-<main class="join-card">
+    <main class="join-card">
 
-    <div class="join-brand">
+        <!-- BRAND -->
+        <div class="join-brand">
 
-        <img
-            src="assets/logo.png"
-            class="join-logo"
-            alt="Design and Craft Mart logo"
+            <img
+                src="assets/logo.png"
+                class="join-logo"
+                alt="Design and Craft Mart logo"
+            >
+
+            <h1>TEAM</h1>
+
+            <p>Design and Craft Mart</p>
+
+        </div>
+
+
+        <!-- INTRO -->
+        <p class="join-intro">
+            To join the team, please fill up the form.<br>
+            Admin will review and approve your request before you can log in.
+        </p>
+
+
+        <!-- MESSAGE -->
+        <div
+            class="join-message"
+            id="msgBox"
+            role="alert"
+        ></div>
+
+
+        <!-- FORM -->
+        <form
+            id="joinForm"
+            class="join-form"
+            novalidate
         >
 
-        <h1>TEAM</h1>
+            <!-- FULL NAME -->
+            <div class="join-field">
 
-        <p>Design and Craft Mart</p>
+                <label for="fullName">
+                    Full Name *
+                </label>
 
-    </div>
+                <input
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    autocomplete="name"
+                    required
+                >
 
-
-    <p class="join-intro">
-        To join the team, please fill up the form. <br>
-        Admin will review and approve your request before you can log in.
-    </p>
-
-
-    <div
-        class="join-message"
-        id="msgBox"
-        role="alert"
-    ></div>
+            </div>
 
 
-    <form
-        id="joinForm"
-        class="join-form"
-    >
+            <!-- MOBILE -->
+            <div class="join-field">
 
-        <div class="join-field">
+                <label for="mobile">
+                    Mobile Number *
+                </label>
 
-            <label for="fullName">
-                Full Name *
-            </label>
+                <input
+                    type="tel"
+                    id="mobile"
+                    name="mobile"
+                    autocomplete="tel"
+                    required
+                >
 
-            <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                autocomplete="name"
-                required
+            </div>
+
+
+            <!-- ADDRESS -->
+            <div class="join-field full">
+
+                <label for="address">
+                    Address *
+                </label>
+
+                <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    autocomplete="street-address"
+                    required
+                >
+
+            </div>
+
+
+            <!-- FACEBOOK -->
+            <div class="join-field full">
+
+                <label for="fbProfile">
+                    Facebook Profile Link / ID Name
+                </label>
+
+                <input
+                    type="text"
+                    id="fbProfile"
+                    name="fbProfile"
+                    placeholder="facebook.com/yourname"
+                    autocomplete="url"
+                >
+
+            </div>
+
+
+            <!-- DIVIDER -->
+            <hr class="join-divider">
+
+
+            <!-- LOGIN INFORMATION -->
+            <div class="join-section-title">
+                Login Information
+            </div>
+
+
+            <!-- EMAIL -->
+            <div class="join-field">
+
+                <label for="email">
+                    Email *
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+            <div class="join-field">
+
+                <label for="password">
+                    Password *
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    autocomplete="new-password"
+                    minlength="6"
+                    required
+                >
+
+            </div>
+
+
+            <!-- SUBMIT -->
+            <button
+                type="submit"
+                class="join-submit"
+                id="submitBtn"
             >
+                Send Request
+            </button>
+
+        </form>
+
+
+        <!-- LOGIN -->
+        <div class="join-login">
+
+            Have an approved account?
+
+            <a href="index.html">
+                Log in
+            </a>
 
         </div>
 
-
-        <div class="join-field">
-
-            <label for="mobile">
-                Mobile Number *
-            </label>
-
-            <input
-                type="tel"
-                id="mobile"
-                name="mobile"
-                autocomplete="tel"
-                required
-            >
-
-        </div>
+    </main>
 
 
-        <div class="join-field full">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
 
-            <label for="address">
-                Address *
-            </label>
-
-            <input
-                type="text"
-                id="address"
-                name="address"
-                autocomplete="street-address"
-                required
-            >
-
-        </div>
+            document.body.classList.add("page-ready");
 
 
-        <div class="join-field full">
+            const form =
+                document.getElementById("joinForm");
 
-            <label for="fbProfile">
-                Facebook Profile Link / Id Name
-            </label>
+            const submitBtn =
+                document.getElementById("submitBtn");
 
-            <input
-                type="text"
-                id="fbProfile"
-                name="fbProfile"
-                placeholder="facebook.com/yourname"
-                autocomplete="url"
-            >
-
-        </div>
+            const msgBox =
+                document.getElementById("msgBox");
 
 
-        <hr class="join-divider">
+            if (!form) {
+                console.error("joinForm not found");
+                return;
+            }
 
 
-        <div class="join-section-title">
-            Login Information
-        </div>
+            function showMessage(
+                message,
+                type = "error"
+            ) {
+
+                if (!msgBox) {
+                    alert(message);
+                    return;
+                }
 
 
-        <div class="join-field">
+                msgBox.style.display = "block";
 
-            <label for="email">
-                Email *
-            </label>
-
-            <input
-                type="email"
-                id="email"
-                name="email"
-                autocomplete="email"
-                required
-            >
-
-        </div>
+                msgBox.textContent = message;
 
 
-        <div class="join-field">
+                if (type === "success") {
 
-            <label for="password">
-                Password *
-            </label>
+                    msgBox.style.background =
+                        "rgba(80,180,120,.10)";
 
-            <input
-                type="password"
-                id="password"
-                name="password"
-                autocomplete="new-password"
-                minlength="6"
-                required
-            >
+                    msgBox.style.border =
+                        "1px solid rgba(80,180,120,.30)";
 
-        </div>
+                    msgBox.style.color =
+                        "#8de0aa";
 
+                } else {
 
-        <button
-            type="submit"
-            class="join-submit"
-            id="submitBtn"
-        >
-            Send Request
-        </button>
+                    msgBox.style.background =
+                        "rgba(226,96,79,.10)";
 
-    </form>
+                    msgBox.style.border =
+                        "1px solid rgba(226,96,79,.30)";
+
+                    msgBox.style.color =
+                        "#ff9b8d";
+                }
+            }
 
 
-    <div class="join-login">
+            form.addEventListener(
+                "submit",
+                async (event) => {
 
-        Have an approved acount?
+                    event.preventDefault();
 
-        <a href="index.html">
-            Log in
-        </a>
 
-    </div>
+                    const fullName =
+                        document
+                            .getElementById("fullName")
+                            ?.value
+                            .trim();
 
-</main>
+
+                    const mobile =
+                        document
+                            .getElementById("mobile")
+                            ?.value
+                            .trim();
+
+
+                    const address =
+                        document
+                            .getElementById("address")
+                            ?.value
+                            .trim();
+
+
+                    const fbProfile =
+                        document
+                            .getElementById("fbProfile")
+                            ?.value
+                            .trim();
+
+
+                    const email =
+                        document
+                            .getElementById("email")
+                            ?.value
+                            .trim();
+
+
+                    const password =
+                        document
+                            .getElementById("password")
+                            ?.value;
+
+
+                    /* VALIDATION */
+
+                    if (
+                        !fullName ||
+                        !mobile ||
+                        !address ||
+                        !email ||
+                        !password
+                    ) {
+
+                        showMessage(
+                            "Please fill in all required fields."
+                        );
+
+                        return;
+                    }
+
+
+                    if (password.length < 6) {
+
+                        showMessage(
+                            "Password must be at least 6 characters."
+                        );
+
+                        return;
+                    }
+
+
+                    if (
+                        typeof supabaseClient ===
+                        "undefined" ||
+                        !supabaseClient
+                    ) {
+
+                        console.error(
+                            "supabaseClient is not available"
+                        );
+
+                        showMessage(
+                            "Database connection is not available."
+                        );
+
+                        return;
+                    }
+
+
+                    submitBtn.disabled = true;
+
+                    submitBtn.textContent =
+                        "Sending...";
+
+
+                    try {
+
+                        /*
+                         * CREATE SUPABASE AUTH ACCOUNT
+                         */
+
+                        const {
+                            data: authData,
+                            error: authError
+                        } =
+                            await supabaseClient.auth.signUp({
+
+                                email: email,
+
+                                password: password,
+
+                                options: {
+
+                                    data: {
+
+                                        full_name:
+                                            fullName,
+
+                                        mobile:
+                                            mobile,
+
+                                        address:
+                                            address,
+
+                                        fb_profile:
+                                            fbProfile || ""
+
+                                    }
+
+                                }
+
+                            });
+
+
+                        if (authError) {
+
+                            console.error(
+                                "Auth signup error:",
+                                authError
+                            );
+
+                            throw authError;
+                        }
+
+
+                        const user =
+                            authData?.user;
+
+
+                        if (!user) {
+
+                            throw new Error(
+                                "Account could not be created."
+                            );
+                        }
+
+
+                        /*
+                         * SUCCESS
+                         */
+
+                        showMessage(
+                            "Your join request has been sent successfully. Please wait for admin approval.",
+                            "success"
+                        );
+
+
+                        form.reset();
+
+
+                        submitBtn.textContent =
+                            "Request Sent";
+
+                    } catch (error) {
+
+                        console.error(
+                            "Join request failed:",
+                            error
+                        );
+
+
+                        showMessage(
+                            error?.message ||
+                            "Could not send join request."
+                        );
+
+
+                        submitBtn.disabled = false;
+
+                        submitBtn.textContent =
+                            "Send Request";
+                    }
+
+                }
+            );
+
+        });
+    </script>
+
+</body>
 </html>
