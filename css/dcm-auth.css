@@ -1,0 +1,39 @@
+/* DCM — login and join-request pages, Warm Editorial Luxury */
+:root{--bg:#F7F2EA;--sand:#EFE7DA;--g:#1F3D36;--c:#C4673D;--ink:#1B1B1B;--mu:#6F675B;--sh:0 10px 30px rgba(60,40,20,.09);color-scheme:light}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");font:400 16px/1.5 'DM Sans',system-ui,sans-serif;color:var(--ink);min-height:100vh}
+h1,h2,h3,.brand-name{font-family:Fraunces,Georgia,serif;font-weight:400;letter-spacing:-.02em;line-height:1.05}
+input,select,textarea,button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+a{color:var(--c);font-weight:600}
+/* login */
+.login-shell{display:grid;grid-template-columns:1.1fr 1fr;min-height:100vh;gap:24px;padding:24px}
+.login-brand{background:var(--g);color:#fff;border-radius:40px 40px 140px 40px;padding:56px;display:flex;flex-direction:column;justify-content:space-between;gap:28px}
+.brand-logo{width:96px;border-radius:24px;background:#fff;padding:8px}
+.brand-name{font-size:clamp(48px,6vw,92px)}
+.brand-line{width:56px;height:3px;background:var(--c);border-radius:3px;margin:18px 0}
+.brand-tagline{font:italic 400 24px Fraunces,serif;color:#f1c9b4}
+.brand-features{display:grid;gap:12px}.brand-feature{display:flex;gap:12px;align-items:center;opacity:.9}
+.login-area{display:grid;place-items:center;padding:12px}
+.login-card{width:min(460px,100%);background:#fff;border-radius:32px 32px 32px 90px;padding:40px;box-shadow:var(--sh)}
+.login-card h1,.login-card h2{font-size:clamp(34px,4vw,48px);margin-bottom:6px}
+.login-subtitle{color:var(--mu);margin-bottom:20px}
+.input-group{margin-bottom:16px}
+label,.password-label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+.password-label{display:flex;justify-content:space-between}
+input[type=email],input[type=password],input[type=text],input[type=tel],input[type=url],select,textarea{width:100%;min-height:52px;border-radius:16px;border:1.5px solid #e0d7c7;background:#fff;padding:12px 16px}
+input:focus,select:focus,textarea:focus{border-color:var(--g);outline:0;box-shadow:0 0 0 4px rgba(31,61,54,.12)}
+.remember{display:flex;gap:10px;align-items:center;min-height:44px;color:var(--mu)}
+.login-button,.join-submit{display:flex;width:100%;align-items:center;justify-content:center;gap:8px;min-height:56px;border:0;border-radius:999px;background:var(--g);color:#fff;font-weight:600;cursor:pointer;transition:transform .25s cubic-bezier(.34,1.4,.5,1),box-shadow .25s}
+.login-button:hover,.join-submit:hover{transform:translateY(-2px);box-shadow:var(--sh)}
+.error-msg,.join-message{color:#8a3414;background:#F4D9D3;border-radius:14px;padding:10px 14px;margin:10px 0}.error-msg:empty,.join-message:empty{display:none}
+.signup-prompt,.join-login,.copyright,.login-footer{text-align:center;color:var(--mu);margin-top:16px;font-size:14px}
+/* join request */
+.join-page{display:grid;place-items:center;padding:32px 16px;min-height:100vh}
+.join-card{width:min(720px,100%);background:#fff;border-radius:40px 40px 40px 100px;padding:clamp(24px,5vw,48px);box-shadow:var(--sh)}
+.join-brand{display:flex;align-items:center;gap:14px;margin-bottom:12px}.join-logo{width:64px;border-radius:18px}
+.join-intro h1,.join-intro h2,.join-card h1{font-size:clamp(36px,5vw,56px);margin-bottom:8px}.join-intro p{color:var(--mu)}
+.join-section-title{font:400 26px Fraunces,serif;margin:24px 0 10px}.join-divider{height:1px;background:var(--sand);margin:20px 0}
+.join-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.join-field{display:grid;gap:6px}.join-field.full,.join-form .full{grid-column:1/-1}
+@media(max-width:900px){.login-shell{grid-template-columns:1fr;padding:12px}.login-brand{padding:32px;border-radius:32px 32px 80px 32px;min-height:0}.brand-features{display:none}.login-card{padding:28px;border-radius:28px 28px 28px 70px}.join-form{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}

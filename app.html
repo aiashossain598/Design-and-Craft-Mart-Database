@@ -19,7 +19,7 @@
   <link rel="icon" href="assets/logo.png" type="image/png">
 
   <!-- MAIN CSS -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/dcm.css">
 
 </head>
 
@@ -421,7 +421,9 @@
          MAIN
     ======================================================== -->
 
-    <main class="main">
+    <button type="button" class="dock-plus" id="dockPlus" aria-label="Quick add">+</button>
+<div class="quick-sheet" id="quickSheet" hidden><button type="button" data-q="order">New order</button><button type="button" data-q="idea">New idea</button></div>
+<main class="main">
 
 
       <!-- =====================================================
@@ -485,9 +487,7 @@
 
           <div>
 
-            <h1>
-              Welcome back,
-              <span id="dashboardName">
+            <h1 id="greetingH1"><span id="greetWord">Good day</span>, <span id="dashboardName">
                 ...
               </span>
             </h1>
@@ -547,6 +547,8 @@
             </div>
 
           </div>
+<div class="stat-card"><div class="stat-icon">◔</div><div><span>Pending Orders</span><strong id="statPending">—</strong></div></div>
+<div class="stat-card"><div class="stat-icon">◆</div><div><span>Due Today</span><strong id="statDue">—</strong></div></div>
 
 
         </div>
@@ -845,63 +847,8 @@
 
         <!-- ORDERS TABLE -->
 
-        <div
-          class="panel"
-          style="padding:0; overflow-x:auto;"
-        >
-
-
-          <table>
-
-            <thead>
-
-              <tr>
-
-                <th>
-                  Customer
-                </th>
-
-                <th>
-                  Details
-                </th>
-
-                <th>
-                  Price
-                </th>
-
-                <th>
-                  Delivery
-                </th>
-
-                <th>
-                  Status
-                </th>
-
-              </tr>
-
-            </thead>
-
-
-            <tbody id="ordersBody">
-
-              <tr>
-
-                <td
-                  colspan="5"
-                  class="empty-state"
-                >
-                  Loading...
-                </td>
-
-              </tr>
-
-            </tbody>
-
-
-          </table>
-
-
-        </div>
+        <div class="view-toggle" id="ordersViewToggle"><button type="button" class="on" data-view="board">Board</button><button type="button" data-view="list">List</button></div>
+<div id="ordersBoard"></div>
 
 
       </section>
@@ -2244,6 +2191,7 @@
   
   <script src="js/app.js"></script>
   <script src="js/navigation-fix.js"></script>
+  <script src="js/dcm-ui.js"></script>
 
 
 </body>
