@@ -8,6 +8,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:3px solid var(--c);outline-offset:2px}
 a{color:var(--c)}
+.is-hidden{display:none !important}
 .app-shell{display:block}
 .main{max-width:1440px;margin:0 auto;padding:112px 48px 90px}
 .eyebrow,.section-label,.modal-eyebrow{display:none}

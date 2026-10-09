@@ -971,34 +971,89 @@ document.getElementById('profileAvatarEditBtn')?.addEventListener('click', async
     input.click();
 });
 
+// Helper function to export business card without mirror transform
+async function exportBusinessCardToImage(isBackSide = true) {
+    try {
+        // Wait for fonts to be fully loaded
+        await document.fonts.ready;
+
+        const originalCard = document.getElementById('businessCard');
+        if (!originalCard) {
+            throw new Error('Business card element not found');
+        }
+
+        // Determine which face to export
+        const faceSelector = isBackSide ? '.business-card-back' : '.business-card-front';
+        const originalFace = originalCard.querySelector(faceSelector);
+
+        if (!originalFace) {
+            throw new Error(`Card ${isBackSide ? 'back' : 'front'} face not found`);
+        }
+
+        // Clone the face element
+        const clonedFace = originalFace.cloneNode(true);
+
+        // Reset all transforms on the clone
+        clonedFace.style.transform = 'none';
+        clonedFace.style.backfaceVisibility = 'visible';
+        clonedFace.style.WebkitBackfaceVisibility = 'visible';
+
+        // Create an offscreen container
+        const offscreenContainer = document.createElement('div');
+        offscreenContainer.style.position = 'fixed';
+        offscreenContainer.style.left = '-9999px';
+        offscreenContainer.style.top = '0';
+        offscreenContainer.style.width = '520px';  // Match card width
+        offscreenContainer.style.height = '297px'; // Match card height (520 * 1.75)
+        offscreenContainer.style.zIndex = '-9999';
+
+        // Create a wrapper to maintain card styling
+        const wrapper = document.createElement('div');
+        wrapper.style.width = '100%';
+        wrapper.style.height = '100%';
+        wrapper.style.position = 'relative';
+        wrapper.appendChild(clonedFace);
+
+        offscreenContainer.appendChild(wrapper);
+        document.body.appendChild(offscreenContainer);
+
+        // Capture the cloned element at scale 3
+        const canvas = await html2canvas(offscreenContainer, {
+            backgroundColor: null, // Transparent background
+            scale: 3,
+            useCORS: true,
+            allowTaint: true,
+            scrollX: 0,
+            scrollY: 0,
+            windowHeight: 297,
+            windowWidth: 520
+        });
+
+        // Clean up
+        document.body.removeChild(offscreenContainer);
+
+        return canvas.toDataURL('image/png');
+
+    } catch (error) {
+        console.error('Card export error:', error);
+        throw error;
+    }
+}
+
 // ------------------------------------------------------------
 // Download Card button
 // ------------------------------------------------------------
 
 document.getElementById('downloadBusinessCard')?.addEventListener('click', async () => {
-    const card = document.getElementById('businessCard');
-    if (!card) {
-        showToast('Business card not found on the page.', 'error');
-        return;
-    }
-
     if (typeof html2canvas === 'undefined') {
         showToast('Download library not loaded.', 'error');
         return;
     }
 
     try {
-        await new Promise(r => setTimeout(r, 80));
-        const canvas = await html2canvas(card, {
-            backgroundColor: null,
-            scale: 2,
-            useCORS: true,
-            allowTaint: true,
-            scrollX: 0,
-            scrollY: 0
-        });
+        // Export the back/contact side (always show this regardless of flip state)
+        const dataUrl = await exportBusinessCardToImage(true);
 
-        const dataUrl = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         const filename = `${(currentProfile?.full_name || 'business-card').replace(/[^a-z0-9-_.]/gi, '_')}.png`;
         link.href = dataUrl;
