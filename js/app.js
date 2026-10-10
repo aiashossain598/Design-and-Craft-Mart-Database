@@ -972,72 +972,59 @@ document.getElementById('profileAvatarEditBtn')?.addEventListener('click', async
 });
 
 // Helper function to export business card without mirror transform
-async function exportBusinessCardToImage(isBackSide = true) {
-    try {
-        // Wait for fonts to be fully loaded
-        await document.fonts.ready;
+const LOGO_SRC = 'assets/logo.png'; // <-- tomar logo-r asol path dao
 
-        const originalCard = document.getElementById('businessCard');
-        if (!originalCard) {
-            throw new Error('Business card element not found');
-        }
+async function exportBusinessCardToImage(profile) {
+  // same data website-er moto: name ar role ekhane tomar website jei value dekhay sheta dao
+  const name  = profile.display_name || 'Design and Craft Mart';
+  const role  = profile.role || 'partner';
+  const rows = [
+    ['☎', profile.phone],
+    ['✉', profile.email],
+    ['⌂', profile.address],
+    ['f', profile.facebook],
+  ].filter(([, v]) => v && String(v).trim()); // faka row bad
 
-        // Determine which face to export
-        const faceSelector = isBackSide ? '.business-card-back' : '.business-card-front';
-        const originalFace = originalCard.querySelector(faceSelector);
+  const rowsHtml = rows.map(([icon, v]) => `
+    <div style="display:flex;gap:12px;align-items:center;font-size:15px;margin-top:10px;">
+      <span style="width:18px;text-align:center;">${icon}</span><span>${v}</span>
+    </div>`).join('');
 
-        if (!originalFace) {
-            throw new Error(`Card ${isBackSide ? 'back' : 'front'} face not found`);
-        }
+  const holder = document.createElement('div');
+  holder.style.cssText = 'position:fixed;left:-9999px;top:0;';
+  holder.innerHTML = `
+    <div id="export-card" style="width:520px;height:297px;box-sizing:border-box;display:flex;align-items:center;
+      padding:0 32px;border-radius:28px;color:#fff;font-family:'DM Sans',sans-serif;
+      background:linear-gradient(135deg,#264a40,#17302a);">
+      <div style="flex:1;">
+        <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:700;line-height:1.15;">${name}</div>
+        <div style="font-size:15px;opacity:.7;margin-top:4px;">${role}</div>
+        <div style="width:40px;height:3px;background:#c4673d;margin:14px 0 6px;"></div>
+        ${rowsHtml}
+      </div>
+      <div style="width:1px;align-self:stretch;margin:48px 24px;background:#c4673d;opacity:.7;"></div>
+      <div style="flex:0 0 150px;text-align:left;">
+        <img id="export-logo" src="${LOGO_SRC}" crossorigin="anonymous" style="width:90px;display:block;margin-bottom:10px;">
+        <div style="font-size:12px;letter-spacing:.12em;opacity:.8;">DESIGN AND CRAFT MART</div>
+      </div>
+    </div>`;
+  document.body.appendChild(holder);
 
-        // Clone the face element
-        const clonedFace = originalFace.cloneNode(true);
+  try {
+    await document.fonts.ready;
+    const img = holder.querySelector('#export-logo');
+    await img.decode(); // logo load na hole error dibe, faka image jabe na
 
-        // Reset all transforms on the clone
-        clonedFace.style.transform = 'none';
-        clonedFace.style.backfaceVisibility = 'visible';
-        clonedFace.style.WebkitBackfaceVisibility = 'visible';
-
-        // Create an offscreen container
-        const offscreenContainer = document.createElement('div');
-        offscreenContainer.style.position = 'fixed';
-        offscreenContainer.style.left = '-9999px';
-        offscreenContainer.style.top = '0';
-        offscreenContainer.style.width = '520px';  // Match card width
-        offscreenContainer.style.height = '297px'; // Match card height (520 * 1.75)
-        offscreenContainer.style.zIndex = '-9999';
-
-        // Create a wrapper to maintain card styling
-        const wrapper = document.createElement('div');
-        wrapper.style.width = '100%';
-        wrapper.style.height = '100%';
-        wrapper.style.position = 'relative';
-        wrapper.appendChild(clonedFace);
-
-        offscreenContainer.appendChild(wrapper);
-        document.body.appendChild(offscreenContainer);
-
-        // Capture the cloned element at scale 3
-        const canvas = await html2canvas(offscreenContainer, {
-            backgroundColor: null, // Transparent background
-            scale: 3,
-            useCORS: true,
-            allowTaint: true,
-            scrollX: 0,
-            scrollY: 0,
-            windowHeight: 297,
-            windowWidth: 520
-        });
-
-        // Clean up
-        document.body.removeChild(offscreenContainer);
-
-        return canvas.toDataURL('image/png');
-
-    } catch (error) {
-        console.error('Card export error:', error);
-        throw error;
-    }
+    const canvas = await html2canvas(holder.querySelector('#export-card'), {
+      scale: 3, backgroundColor: null, useCORS: true
+    });
+    const a = document.createElement('a');
+    a.download = 'DCM-business-card.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  } finally {
+    holder.remove();
+  }
 }
 
 // ------------------------------------------------------------
@@ -1051,22 +1038,12 @@ document.getElementById('downloadBusinessCard')?.addEventListener('click', async
     }
 
     try {
-        // Export the back/contact side (always show this regardless of flip state)
-        const dataUrl = await exportBusinessCardToImage(true);
-
-        const link = document.createElement('a');
-        const filename = `${(currentProfile?.full_name || 'business-card').replace(/[^a-z0-9-_.]/gi, '_')}.png`;
-        link.href = dataUrl;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        showToast('Business card downloaded.', 'success');
+        await exportBusinessCardToImage(currentProfile);
     } catch (err) {
-        console.error('Download card error:', err);
-        showToast('Unable to download card: ' + (err?.message || err), 'error');
+        console.error('Card export failed:', err);
+        showToast('Could not download the card. Please try again.', 'error');
     }
-});
+}); 
 
 const flipButton = document.getElementById('flipCardBtn');
 const businessCard = document.getElementById('businessCard');
