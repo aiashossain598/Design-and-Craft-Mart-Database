@@ -55,3 +55,7 @@
   .kpi-card strong{font-size:44px}
 }
 @media(prefers-reduced-motion:reduce){.nav-add-btn,.welcome-bar i{transition:none}}
+
+/* ===== profile page: single column now that the business card is gone ===== */
+.profile-layout{grid-template-columns:minmax(0,760px)}
+@media(min-width:701px){.profile-info{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 32px}}
