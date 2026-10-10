@@ -134,7 +134,6 @@ let currentContentFilter = "all";
         currentProfile = profile;
 
         updateUserInterface();
-        renderBusinessCard(currentProfile);
 
         // ----------------------------------------------------
         // Setup user information
@@ -625,93 +624,6 @@ function updateProfileUI() {
     }
 
 
-    // --------------------------------------------------------
-    // BUSINESS CARD
-    // --------------------------------------------------------
-
-    const businessCardName =
-        document.getElementById(
-            "businessCardName"
-        );
-
-    if (businessCardName) {
-
-        businessCardName.textContent =
-            fullName;
-
-    }
-
-
-    const businessCardPosition =
-        document.getElementById(
-            "businessCardPosition"
-        );
-
-    if (businessCardPosition) {
-
-        businessCardPosition.textContent =
-            position;
-
-    }
-
-
-    const businessCardPhone =
-        document.getElementById(
-            "businessCardPhone"
-        );
-
-    if (businessCardPhone) {
-
-        businessCardPhone.textContent =
-            phone;
-
-    }
-
-
-    const businessCardEmail =
-        document.getElementById(
-            "businessCardEmail"
-        );
-
-    if (businessCardEmail) {
-
-        businessCardEmail.textContent =
-            email;
-
-    }
-
-
-
-
-    const businessCardFacebook =
-        document.getElementById(
-            "businessCardFacebook"
-        );
-
-    if (businessCardFacebook) {
-        if (facebook) {
-            try {
-                const u = new URL(facebook, window.location.origin);
-                // extract readable username or last part of path
-                let display = u.pathname.replace(/\/+$/,'').split('/').pop() || u.hostname;
-                if (!display || display === '/') display = facebook;
-                businessCardFacebook.href = facebook;
-                businessCardFacebook.textContent = display;
-                businessCardFacebook.style.pointerEvents = 'auto';
-                businessCardFacebook.style.opacity = '1';
-            } catch (e) {
-                businessCardFacebook.href = facebook;
-                businessCardFacebook.textContent = facebook;
-                businessCardFacebook.style.pointerEvents = 'auto';
-                businessCardFacebook.style.opacity = '1';
-            }
-        } else {
-            businessCardFacebook.removeAttribute('href');
-            businessCardFacebook.textContent = 'Not added';
-            businessCardFacebook.style.pointerEvents = 'none';
-            businessCardFacebook.style.opacity = '0.6';
-        }
-    }
 
 }
 
@@ -971,88 +883,6 @@ document.getElementById('profileAvatarEditBtn')?.addEventListener('click', async
     input.click();
 });
 
-// Helper function to export business card without mirror transform
-const LOGO_SRC = 'assets/logo.png'; // <-- tomar logo-r asol path dao
-
-async function exportBusinessCardToImage(profile) {
-  // same data website-er moto: name ar role ekhane tomar website jei value dekhay sheta dao
-  const name  = profile.display_name || 'Design and Craft Mart';
-  const role  = profile.role || 'partner';
-  const rows = [
-    ['☎', profile.phone],
-    ['✉', profile.email],
-    ['⌂', profile.address],
-    ['f', profile.facebook],
-  ].filter(([, v]) => v && String(v).trim()); // faka row bad
-
-  const rowsHtml = rows.map(([icon, v]) => `
-    <div style="display:flex;gap:12px;align-items:center;font-size:15px;margin-top:10px;">
-      <span style="width:18px;text-align:center;">${icon}</span><span>${v}</span>
-    </div>`).join('');
-
-  const holder = document.createElement('div');
-  holder.style.cssText = 'position:fixed;left:-9999px;top:0;';
-  holder.innerHTML = `
-    <div id="export-card" style="width:520px;height:297px;box-sizing:border-box;display:flex;align-items:center;
-      padding:0 32px;border-radius:28px;color:#fff;font-family:'DM Sans',sans-serif;
-      background:linear-gradient(135deg,#264a40,#17302a);">
-      <div style="flex:1;">
-        <div style="font-family:'Fraunces',serif;font-size:26px;font-weight:700;line-height:1.15;">${name}</div>
-        <div style="font-size:15px;opacity:.7;margin-top:4px;">${role}</div>
-        <div style="width:40px;height:3px;background:#c4673d;margin:14px 0 6px;"></div>
-        ${rowsHtml}
-      </div>
-      <div style="width:1px;align-self:stretch;margin:48px 24px;background:#c4673d;opacity:.7;"></div>
-      <div style="flex:0 0 150px;text-align:left;">
-        <img id="export-logo" src="${LOGO_SRC}" crossorigin="anonymous" style="width:90px;display:block;margin-bottom:10px;">
-        <div style="font-size:12px;letter-spacing:.12em;opacity:.8;">DESIGN AND CRAFT MART</div>
-      </div>
-    </div>`;
-  document.body.appendChild(holder);
-
-  try {
-    await document.fonts.ready;
-    const img = holder.querySelector('#export-logo');
-    await img.decode(); // logo load na hole error dibe, faka image jabe na
-
-    const canvas = await html2canvas(holder.querySelector('#export-card'), {
-      scale: 3, backgroundColor: null, useCORS: true
-    });
-    const a = document.createElement('a');
-    a.download = 'DCM-business-card.png';
-    a.href = canvas.toDataURL('image/png');
-    a.click();
-  } finally {
-    holder.remove();
-  }
-}
-
-// ------------------------------------------------------------
-// Download Card button
-// ------------------------------------------------------------
-
-document.getElementById('downloadBusinessCard')?.addEventListener('click', async () => {
-    if (typeof html2canvas === 'undefined') {
-        showToast('Download library not loaded.', 'error');
-        return;
-    }
-
-    try {
-        await exportBusinessCardToImage(currentProfile);
-    } catch (err) {
-        console.error('Card export failed:', err);
-        showToast('Could not download the card. Please try again.', 'error');
-    }
-}); 
-
-const flipButton = document.getElementById('flipCardBtn');
-const businessCard = document.getElementById('businessCard');
-if (businessCard && flipButton) {
-    
-
-    flipButton.addEventListener('click', toggleBusinessCardFlip);
-    businessCard.addEventListener('click', toggleBusinessCardFlip);
-}
 
 
 // ------------------------------------------------------------
@@ -2926,12 +2756,7 @@ orderForm?.addEventListener(
             // Insert order
             // ------------------------------------------------
 
-            const {
-                error
-            } =
-                await supabaseClient
-                    .from("orders")
-                    .insert({
+            const { data: newOrder, error } = await supabaseClient.from("orders").insert({
 
                         customer_id:
                             customerId,
@@ -2952,7 +2777,7 @@ orderForm?.addEventListener(
                         created_by:
                             currentUser.id
 
-                    });
+                    }).select("id").single();
 
 
             if (error) {
@@ -2960,6 +2785,8 @@ orderForm?.addEventListener(
                 throw error;
 
             }
+
+            window.dcmLogOrderEvent?.(newOrder?.id, "created", null, status);
 
 
             // ------------------------------------------------
@@ -5384,200 +5211,7 @@ initializeTeamChat().catch(err => console.error('initializeTeamChat error', err)
  
 
 
-// ============================================================
-/* ========================================================= */
-// ============================================================
 
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const card = document.getElementById("businessCard");
-    const flipButton = document.getElementById("flipCardBtn");
-
-    if (!card || !flipButton) return;
-
-    function flipBusinessCard() {
-
-        card.classList.toggle("is-flipped");
-
-        const flipped =
-            card.classList.contains("is-flipped");
-
-        flipButton.innerHTML = flipped
-            ? "<span>↻</span> Front"
-            : "<span>↻</span> Flip Card";
-    }
-
-
-    flipButton.addEventListener(
-        "click",
-        flipBusinessCard
-    );
-
-
-    /* click directly on card */
-
-    card.addEventListener("click", () => {
-        flipBusinessCard();
-    });
-
-});
-
-/* =========================================================
-   FINAL BUSINESS CARD RENDERER
-========================================================= */
-
-function renderBusinessCard(profile) {
-
-    if (!profile) return;
-
-    const name =
-        profile.full_name ||
-        "Partner";
-
-    const role =
-        profile.position ||
-        profile.job_title ||
-        profile.role ||
-        "Partner";
-
-    const phone =
-        profile.mobile ||
-        "";
-
-    const email =
-        currentUser?.email ||
-        profile.email ||
-        "";
-
-    const website =
-        profile.website ||
-        profile.website_url ||
-        profile.web_url ||
-        "";
-
-    const nameEl =
-        document.getElementById("cardPersonName");
-
-    const roleEl =
-        document.getElementById("cardPersonRole");
-
-    const phoneEl =
-        document.getElementById("cardPhone");
-
-    const phoneRow =
-        document.getElementById("cardPhoneRow");
-
-    const emailEl =
-        document.getElementById("cardEmail");
-
-    const emailRow =
-        document.getElementById("cardEmailRow");
-
-    const websiteEl =
-        document.getElementById("cardWebsite");
-
-    const websiteRow =
-        document.getElementById("cardWebsiteRow");
-
-
-    /* NAME */
-
-    if (nameEl) {
-        nameEl.textContent = name;
-    }
-
-
-    /* POSITION */
-
-    if (roleEl) {
-        roleEl.textContent = role;
-    }
-
-
-    /* PHONE */
-
-    if (phoneEl) {
-        phoneEl.textContent = phone;
-    }
-
-    if (phoneRow) {
-        phoneRow.classList.toggle(
-            "is-hidden",
-            !phone
-        );
-    }
-
-
-    /* EMAIL */
-
-    if (emailEl) {
-        emailEl.textContent = email;
-    }
-
-    if (emailRow) {
-        emailRow.classList.toggle(
-            "is-hidden",
-            !email
-        );
-    }
-
-
-    /* WEBSITE */
-
-    if (websiteEl) {
-        websiteEl.textContent = website;
-    }
-
-    if (websiteRow) {
-        websiteRow.classList.toggle(
-            "is-hidden",
-            !website
-        );
-    }
-}
-
-function toggleBusinessCardFlip() {
-    const card = document.querySelector('.business-card');
-
-    if (!card) {
-        console.warn('Business card element not found.');
-        return;
-    }
-
-    card.classList.toggle('flipped');
-}
-
-// ============================================================
-// BUSINESS CARD FLIP FIX
-// ============================================================
-
-window.toggleBusinessCardFlip = function () {
-
-    const card = document.getElementById("businessCard");
-    const button = document.getElementById("flipCardBtn");
-
-    if (!card) return;
-
-    card.classList.toggle("is-flipped");
-
-    const flipped =
-        card.classList.contains("is-flipped");
-
-    if (button) {
-
-        button.innerHTML = flipped
-            ? '<span>↻</span> Front'
-            : '<span>↻</span> Flip Card';
-
-    }
-
-};
 
 function setupMobileNavigation() {
 

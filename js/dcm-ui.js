@@ -93,7 +93,7 @@
   function card(o, list) {
     const c = countdown(o);
     const name = o.customers?.name || "—";
-    const move = `<select class="oc-move status-select" data-id="${E(o.id)}" aria-label="Move order">${STATUS.map((s) => `<option value="${s}" ${o.status === s ? "selected" : ""}>${label(s)}</option>`).join("")}</select>`;
+    const move = `<select class="oc-move status-select" data-id="${E(o.id)}" aria-label="Move order">${STATUS.map((s) => `<option value="${s}" ${o.status === s ? "selected" : ""}>${label(s)}</option>`).join("")}</select><button type="button" class="oc-hist" data-hist="${E(o.id)}">History</button>`;
     if (list) return `<div class="oc ${c.late ? "late" : ""}"><b>${E(name)}</b><span class="det" style="margin:0">${E(o.details || "—")}</span><b>${money(o.price)}</b><span class="cd" style="justify-self:start">${c.t}</span>${move}</div>`;
     return `<div class="oc ${c.late ? "late" : ""}" draggable="true" data-id="${E(o.id)}">
       <div class="r"><b>${E(name)}</b><b>${money(o.price)}</b></div>
@@ -102,8 +102,10 @@
   }
 
   async function setStatus(id, status) {
+    const prev = cache.find((x) => x.id === id)?.status;
     const { error } = await supabaseClient.from("orders").update({ status, updated_at: new Date().toISOString() }).eq("id", id);
     if (error) { console.error("Order update error:", error); alert("Problem: " + error.message); return false; }
+    if (prev !== status) window.dcmLogOrderEvent?.(id, "status_changed", prev, status);
     const o = cache.find((x) => x.id === id); if (o) o.status = status;
     render();
     if (typeof loadDashboard === "function") loadDashboard();
@@ -201,6 +203,7 @@
     sheet.addEventListener("click", (e) => {
       const b = e.target.closest("[data-q]"); if (!b) return;
       sheet.hidden = true;
+      if (b.dataset.q === "lead") { window.dcmOpenLead?.(); return; }
       (b.dataset.q === "order" ? $("#openOrderModal") : $("#openIdeaModal"))?.click();
     });
   }

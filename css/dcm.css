@@ -170,18 +170,6 @@ section[id^="tab-"]{animation:rise .5s ease both}
 .profile-position{color:var(--mu);margin-bottom:12px}
 .profile-info{display:grid;gap:12px;margin:18px 0}
 .profile-info-item span{display:block;color:var(--mu);font-size:13px}.profile-info-item strong{font-weight:500}
-.profile-business-card-section{display:grid;gap:22px;justify-items:center;perspective:1400px}
-.business-card-header{display:flex;justify-content:space-between;align-items:center;gap:12px;width:min(100%,520px);flex-wrap:wrap}
-.business-card-header h2{font-size:clamp(28px,3vw,40px)}
-.business-card-scene{width:min(100%,520px);aspect-ratio:1.75}
-.business-card{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,.1,.2,1)}
-.business-card.flipped{transform:rotateY(180deg)}
-.business-card-face{position:absolute;inset:0;border-radius:26px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:linear-gradient(145deg,#27493f,var(--g) 60%,#16302a);color:#fff;box-shadow:0 24px 50px rgba(31,61,54,.35);display:grid;place-items:center}
-.business-card-back{transform:rotateY(180deg)}
-.business-card-front-logo{width:46%;max-height:70%;object-fit:contain;filter:sepia(1) saturate(3) hue-rotate(335deg) brightness(1.05);animation:foil 5s linear infinite}
-@keyframes foil{50%{filter:sepia(1) saturate(4) hue-rotate(335deg) brightness(1.35)}}
-.card-gold-pattern,.card-gold-diagonal{display:none}
-.business-card-back-inner{display:grid;grid-template-columns:1.4fr auto 1fr;gap:16px;align-items:center;padding:24px;width:100%}
 .card-user-name{font:600 24px Fraunces,serif}.card-user-title{opacity:.75;font-size:14px}
 .card-small-line{width:36px;height:2px;background:var(--c);margin:10px 0}
 .card-contact{display:flex;gap:8px;align-items:center;font-size:13px;margin:4px 0;word-break:break-all}
@@ -262,7 +250,6 @@ section[id^="tab-"]{animation:rise .5s ease both}
 .kan{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:20px -18px 0;padding:0 18px}
 .col{flex:0 0 84%;scroll-snap-align:center}
 .olist .oc{grid-template-columns:1fr 1fr}
-.business-card-back-inner{grid-template-columns:1fr;padding:14px;gap:6px}.card-back-divider,.card-back-right{display:none}
 .modal-overlay{align-items:flex-end;padding:0}
 .idea-modal,.modal-card,.order-modal,.details-modal{border-radius:28px 28px 0 0;max-height:90vh;width:100%}
 .grid-2{grid-template-columns:1fr}

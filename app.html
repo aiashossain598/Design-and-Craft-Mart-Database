@@ -19,7 +19,7 @@
   <link rel="icon" href="assets/logo.png" type="image/png">
 
   <!-- MAIN CSS -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/dcm.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/dcm.css"><link rel="stylesheet" href="css/dcm-extras.css">
 
 </head>
 
@@ -107,6 +107,21 @@
             Orders
           </span>
 
+        </div>
+
+
+        <div class="nav-add" id="navAdd">
+          <button type="button" class="nav-add-btn" id="navAddBtn" aria-label="Add new" aria-haspopup="menu" aria-expanded="false">+</button>
+          <div class="nav-add-menu" id="navAddMenu" role="menu" hidden>
+            <button type="button" role="menuitem" data-add="content">Add content</button>
+            <button type="button" role="menuitem" data-add="order">Add order</button>
+            <button type="button" role="menuitem" data-add="lead">Add lead</button>
+          </div>
+        </div>
+
+        <div class="nav-item" data-tab="leads">
+          <span class="nav-icon">📈</span>
+          <span>Leads</span>
         </div>
 
 
@@ -422,7 +437,7 @@
     ======================================================== -->
 
     <button type="button" class="dock-plus" id="dockPlus" aria-label="Quick add">+</button>
-<div class="quick-sheet" id="quickSheet" hidden><button type="button" data-q="order">New order</button><button type="button" data-q="idea">New idea</button></div>
+<div class="quick-sheet" id="quickSheet" hidden><button type="button" data-q="order">New order</button><button type="button" data-q="idea">New idea</button><button type="button" data-q="lead">New lead</button></div>
 <main class="main">
 
 
@@ -502,6 +517,18 @@
 
 
 
+        <div class="welcome-card" id="welcomeCard" hidden></div>
+
+        <div class="dash-tools">
+          <span class="dash-tools-label">Orders and revenue for the last</span>
+          <div class="view-toggle" id="rangeToggle">
+            <button type="button" data-range="7">7 days</button>
+            <button type="button" data-range="14">14 days</button>
+            <button type="button" class="on" data-range="30">30 days</button>
+          </div>
+        </div>
+
+
         <!-- STATS -->
 
         <div class="stats-grid">
@@ -553,6 +580,20 @@
 
         </div>
 
+
+
+        <div class="kpi-row">
+          <div class="kpi-card">
+            <span>Follow-ups due</span>
+            <strong id="statFollowUps">—</strong>
+            <small>Leads to contact today or earlier</small>
+          </div>
+          <div class="kpi-card">
+            <span id="revLabel">Revenue</span>
+            <strong id="statRevenue">—</strong>
+            <small>From delivered orders</small>
+          </div>
+        </div>
 
 
         <!-- DASHBOARD CONTENT -->
@@ -858,6 +899,18 @@
 <!-- =====================================================
      TEAM CHAT
 ===================================================== -->
+
+      <section id="tab-leads" class="leads-tab" style="display:none;">
+        <div class="order-page-header">
+          <div class="page-heading">
+            <h1>Leads</h1>
+            <p>Inquiries before they become orders. Drag a card to move it, or convert it to an order.</p>
+          </div>
+          <button type="button" class="btn-add" id="openLeadModal">Add Lead</button>
+        </div>
+        <div id="leadsBoard"></div>
+      </section>
+
 
 <section
   id="tab-team-chat"
@@ -1219,105 +1272,6 @@
 
 
 
- <!-- =========================
-     BUSINESS CARD
-========================= -->
-<div class="profile-business-card-section">
-
-    <div class="business-card-header">
-        <div>
-            <span class="section-label">BUSINESS CARD</span>
-            <h2>Digital Business Card</h2>
-        </div>
-
-        <button type="button" class="card-flip-button" id="flipCardBtn">
-            <span>↻</span>
-            Flip Card
-        </button>
-    </div>
-
-    <div class="business-card-scene">
-        <div class="business-card" id="businessCard">
-
-            <div class="business-card-face business-card-front">
-                <img
-                    src="assets/logo.png"
-                    class="business-card-front-logo"
-                    alt="Design and Craft Mart"
-                >
-                <div class="card-gold-pattern"></div>
-                <div class="card-gold-diagonal"></div>
-            </div>
-
-            <div class="business-card-face business-card-back">
-                <div class="business-card-back-inner">
-                    <div class="card-back-left">
-                        <div class="card-user-name" id="cardPersonName"></div>
-                        <div class="card-user-title" id="cardPersonRole"></div>
-                        <div class="card-small-line"></div>
-
-                        <div class="card-contact-list">
-                            <div class="card-contact" id="cardPhoneRow">
-                                <div class="contact-icon">☎</div>
-                                <span id="cardPhone"></span>
-                            </div>
-
-                            <div class="card-contact" id="cardEmailRow">
-                                <div class="contact-icon">✉</div>
-                                <span id="cardEmail"></span>
-                            </div>
-
-                            <div class="card-contact" id="cardWebsiteRow">
-                                <div class="contact-icon">◎</div>
-                                <span id="cardWebsite"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-back-divider">
-                        <span></span>
-                        <b>◇</b>
-                        <span></span>
-                    </div>
-
-                    <div class="card-back-right">
-                        <img
-                            src="assets/logo.png"
-                            class="card-back-logo"
-                            alt="DCM"
-                        >
-
-                        <div class="card-back-company">
-                            <span>DESIGN AND CRAFT</span>
-                            <span>MART</span>
-                        </div>
-
-                        <div class="card-divider card-divider-small">
-                            <span></span>
-                            <b>✦</b>
-                            <span></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-gold-pattern"></div>
-                <div class="card-gold-diagonal"></div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="business-card-actions">
-        <button
-            type="button"
-            class="card-action-primary"
-            id="downloadBusinessCard"
-        >
-            Download Card
-        </button>
-    </div>
-
-</div>
 
 
   <!-- =================================================
@@ -2173,6 +2127,61 @@
        Supabase library MUST load before supabase-config.js
   ========================================================== -->
 
+  <!-- LEAD MODAL -->
+  <div id="leadModal" class="modal-overlay" style="display:none;">
+    <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
+      <div class="modal-header order-modal-header">
+        <div>
+          <h2 id="leadModalTitle">Add Lead</h2>
+          <p>Save an inquiry before it becomes an order.</p>
+        </div>
+        <button type="button" class="modal-close" id="closeLeadModal" aria-label="Close">&times;</button>
+      </div>
+      <form id="leadForm">
+        <input type="hidden" id="leadId">
+        <div class="grid-2">
+          <div><label for="leadName">Customer name</label><input type="text" id="leadName" required placeholder="Customer name"></div>
+          <div><label for="leadContact">Contact</label><input type="text" id="leadContact" placeholder="Mobile or Messenger name"></div>
+        </div>
+        <label for="leadInterest">What do they want?</label>
+        <textarea id="leadInterest" rows="3" required placeholder="e.g. Photo frame 12x18, walnut finish"></textarea>
+        <div class="grid-2">
+          <div><label for="leadValue">Estimated value</label><input type="number" id="leadValue" min="0" step="any" placeholder="5000"></div>
+          <div><label for="leadFollowUp">Follow up on</label><input type="date" id="leadFollowUp"></div>
+        </div>
+        <div class="grid-2">
+          <div><label for="leadSource">Where did it come from?</label>
+            <select id="leadSource"><option value="messenger">Messenger</option><option value="facebook">Facebook</option><option value="phone">Phone</option><option value="other">Other</option></select></div>
+          <div><label for="leadStage">Stage</label>
+            <select id="leadStage"><option value="new">New inquiry</option><option value="quote_sent">Quote sent</option><option value="follow_up">Follow-up due</option><option value="converted">Converted</option><option value="lost">Lost</option></select></div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" id="cancelLead">Cancel</button>
+          <button type="submit" class="btn-add" id="leadSubmitBtn">Save Lead</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ORDER HISTORY MODAL -->
+  <div id="orderHistoryModal" class="modal-overlay" style="display:none;">
+    <div class="order-modal" role="dialog" aria-modal="true" aria-labelledby="historyTitle">
+      <div class="modal-header">
+        <div>
+          <h2 id="historyTitle">Order history</h2>
+          <p>Who changed what, and when.</p>
+        </div>
+        <button type="button" class="modal-close" id="closeHistoryModal" aria-label="Close">&times;</button>
+      </div>
+      <div class="hist-list" id="historyList"></div>
+      <div class="hist-note">
+        <input type="text" id="historyNote" placeholder="Add a note for the team" aria-label="Add a note">
+        <button type="button" class="btn-add" id="historyNoteBtn">Post note</button>
+      </div>
+    </div>
+  </div>
+
+
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
   <script
@@ -2184,14 +2193,12 @@
 
   <script src="js/supabase-config.js"></script>
 
-  <!-- html2canvas (used for Download Card) -->
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-
   <!-- APP JAVASCRIPT -->
   
   <script src="js/app.js"></script>
   <script src="js/navigation-fix.js"></script>
   <script src="js/dcm-ui.js"></script>
+  <script src="js/dcm-extras.js"></script>
 
 
 </body>
